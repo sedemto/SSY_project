@@ -6,10 +6,15 @@
  */ 
 
 #include <avr/io.h>
+#include <stdlib.h>
+#include <stdio.h>
+#include <string.h>
+#include <math.h>
 
-
+FILE uart_str = FDEV_SETUP_STREAM(printCHAR, NULL, _FDEV_SETUP_RW);
 int main(void)
 {
+	stdout = &uart_str;
     /* Replace with your application code */
     while (1) 
     {
