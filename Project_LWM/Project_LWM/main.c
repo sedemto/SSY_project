@@ -59,22 +59,22 @@
 //#define sw1_read()     (PINC & (1<<PINC5))
 
 #ifdef IP_WORK
-uint8_t ping_ip[4] = { 192, 168, 0, 100 }; //Ping IP address
+uint8_t ping_ip[4] = { 192, 168, 53, 109 }; //Ping IP address
 //NIC metrics for WORK PC
 wiz_NetInfo netInfo = { .mac  = {0x00, 0x08, 0xdc, 0xab, 0xcd, 0xef}, // Mac address
-		.ip   = {192, 168, 0, 199},         // IP address
+		.ip   = {192, 168, 53, 199},         // IP address
 		.sn   = {255, 255, 255, 0},         // Subnet mask
 		.dns =  {8,8,8,8},			  // DNS address (google dns)
-		.gw   = {192, 168, 0, 1}, // Gateway address
+		.gw   = {192, 168, 53, 1}, // Gateway address
 		.dhcp = NETINFO_STATIC};    //Static IP configuration
 #else
-uint8_t ping_ip[4] = { 192, 168, 1, 81 }; //Ping IP address
+uint8_t ping_ip[4] = { 192, 168, 53, 109 }; //Ping IP address
 //NIC metrics for another PC (second IP configuration)
 wiz_NetInfo netInfo = { .mac  = {0x00, 0x08, 0xdc, 0xab, 0xcd, 0xef}, // Mac address
-		.ip   = {192, 168, 1, 199},         // IP address
+		.ip   = {192, 168, 53, 199},         // IP address
 		.sn   = {255, 255, 255, 0},         // Subnet mask
 		.dns =  {8,8,8,8},			  // DNS address (google dns)
-		.gw   = {192, 168, 1, 1}, // Gateway address
+		.gw   = {192, 168, 53, 1}, // Gateway address
 		.dhcp = NETINFO_STATIC};    //Static IP configuration
 #endif
 
