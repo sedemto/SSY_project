@@ -19,7 +19,7 @@ void UART_init(uint16_t Baudrate){
 	
 }
 void UART_SendChar(uint8_t data){
-	while(!tbi(UCSR1A,UDRE1));
+	while(!tbi_(UCSR1A,UDRE1));
 	UDR1 = data;
 }
 void UART_SendString(char *text){
@@ -30,7 +30,7 @@ void UART_SendString(char *text){
 }
 
 uint8_t UART_GetChar(void){
-	while (!tbi(UCSR1A,RXC1));
+	while (!tbi_(UCSR1A,RXC1));
 	return UDR1;
 }
 int printCHAR(char character, FILE *stream)

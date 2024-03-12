@@ -120,6 +120,7 @@
   <avrgcc.compiler.symbols.DefSymbols>
     <ListValues>
       <Value>DEBUG</Value>
+      <Value>F_CPU=8000000</Value>
     </ListValues>
   </avrgcc.compiler.symbols.DefSymbols>
   <avrgcc.compiler.directories.IncludePaths>
@@ -147,9 +148,63 @@
     </ToolchainSettings>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Application\loopback\loopback.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Application\loopback\loopback.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Application\PING\ping.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Application\PING\ping.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Ethernet\socket.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Ethernet\socket.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Ethernet\W5500\w5500.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Ethernet\W5500\w5500.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Ethernet\wizchip_conf.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Ethernet\wizchip_conf.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="main.c">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="makra.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="spi\spi.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="spi\spi.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="uart\uart.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="uart\uart.h">
+      <SubType>compile</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Application\loopback" />
+    <Folder Include="Application\PING" />
+    <Folder Include="Ethernet" />
+    <Folder Include="Ethernet\W5500" />
+    <Folder Include="Application" />
+    <Folder Include="spi" />
+    <Folder Include="uart" />
   </ItemGroup>
   <Import Project="$(AVRSTUDIO_EXE_PATH)\\Vs\\Compiler.targets" />
 </Project>
