@@ -30,9 +30,9 @@ static uint8_t appUartBufferPtr = 0;
 void sendOK(int16_t odesilatel){
 	if (appDataReqBusy)
 	return;
-	static char text[]="OK";
+	static char text[]="OK\n\r";
 	
-	memcpy(appDataReqBuffer, text,sizeof(appDataReqBuffer));
+	memcpy(appDataReqBuffer, text,sizeof(appDataReqBuffer)-1);
 	
 
 	appDataReq.dstAddr = odesilatel;
@@ -40,7 +40,7 @@ void sendOK(int16_t odesilatel){
 	appDataReq.srcEndpoint = APP_ENDPOINT_ACK;
 	appDataReq.options = NWK_OPT_ENABLE_SECURITY;
 	appDataReq.data = appDataReqBuffer;
-	appDataReq.size = sizeof(text);
+	appDataReq.size = sizeof(text)-1;
 	appDataReq.confirm = appDataConf;
 	NWK_DataReq(&appDataReq);
 
@@ -73,9 +73,12 @@ void appTimerHandler(SYS_Timer_t *timer){
 	(void)timer;
 }
 bool appDataInd(NWK_DataInd_t *ind){
+	//char* temp;
 	for (uint8_t i = 0; i < ind->size; i++){
-		HAL_UartWriteByte(ind->data[i]);
+		printf("%c",ind->data[i]);
+		
 	}
+	//printf(temp);
 	sendOK(ind->srcAddr);
 	
 	
@@ -84,7 +87,8 @@ bool appDataInd(NWK_DataInd_t *ind){
 bool appDataInd_ACK(NWK_DataInd_t *ind)
 {
 	for (uint8_t i = 0; i < ind->size; i++)
-	HAL_UartWriteByte(ind->data[i]);
+		HAL_UartWriteByte(ind->data[i]);
+
 	return true;
 }
 

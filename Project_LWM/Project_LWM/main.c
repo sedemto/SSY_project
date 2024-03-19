@@ -302,29 +302,29 @@ int main()
 		/*
 		 * run ICMP (ping) server
 		 */
-		ping_srv(2);
-
-		/*ICM Ping client example #1 - ping GW/myPC every 10 sec*/
-		if((millis()-timer_ping1)> 10000)
-		{
-			timer_ping1 = millis();
-			//PRINTF("\r\n>> PING GW\r\n");
-			//ping_request(2, netInfo.gw);
-
-			PRINTF("\r\n>> PING my PC\r\n");
-			ping_request(2, ping_ip); //DEVELOPER PC IP
-		}
-
-		/*ICM Ping client example #2 - ping DNS google  every 15 sec*/
-		if((millis()-timer_ping2)> 15000)
-		{
-			timer_ping2 = millis();
-			PRINTF("\r\n>>> PING DNS\r\n");
-			ping_request(2, netInfo.dns);
-		}
-
-		//loopback_ret = loopback_tcpc(SOCK_TCPS, gDATABUF, destip, destport);
-		//if(loopback_ret < 0) printf("loopback ret: %ld\r\n", loopback_ret); // TCP Socket Error code
+// 		ping_srv(2);
+// 
+// 		/*ICM Ping client example #1 - ping GW/myPC every 10 sec*/
+// 		if((millis()-timer_ping1)> 10000)
+// 		{
+// 			timer_ping1 = millis();
+// 			//PRINTF("\r\n>> PING GW\r\n");
+// 			//ping_request(2, netInfo.gw);
+// 
+// 			PRINTF("\r\n>> PING my PC\r\n");
+// 			ping_request(2, ping_ip); //DEVELOPER PC IP
+// 		}
+// 
+// 		/*ICM Ping client example #2 - ping DNS google  every 15 sec*/
+// 		if((millis()-timer_ping2)> 15000)
+// 		{
+// 			timer_ping2 = millis();
+// 			PRINTF("\r\n>>> PING DNS\r\n");
+// 			ping_request(2, netInfo.dns);
+// 		}
+// 
+// 		//loopback_ret = loopback_tcpc(SOCK_TCPS, gDATABUF, destip, destport);
+// 		//if(loopback_ret < 0) printf("loopback ret: %ld\r\n", loopback_ret); // TCP Socket Error code
 
 		if((millis()-timer_link_1sec)> 1000)
 		{
