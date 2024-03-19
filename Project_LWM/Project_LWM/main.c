@@ -20,6 +20,17 @@
 #include "Ethernet/wizchip_conf.h"
 #include "Application/loopback/loopback.h"
 #include "Application/PING/ping.h"
+#include "lwm/lwm.h"
+
+// test
+// #include "hal.h"
+// #include "phy.h"
+// #include "sys.h"
+// #include "nwk.h"
+// #include "sysTimer.h"
+// #include "halBoard.h"
+// #include "halUart.h"
+// #include "config.h"
 
 //#include <stdlib.h> // itoa etc..
 /*
@@ -36,6 +47,8 @@
  * https://www.hw-group.com/software/hercules-setup-utility
  *
  */
+
+
 #define PRINTF_EN 1
 #if PRINTF_EN
 #define PRINTF(FORMAT,args...) printf_P(PSTR(FORMAT),##args)
@@ -97,30 +110,7 @@ void get_mcusr(void)
 #define TICK_PER_SEC 1000UL
 volatile unsigned long _millis; // for millis tick !! Overflow every ~49.7 days
 
-//*********Program metrics
-//const char compile_date[] PROGMEM    = __DATE__;     // Mmm dd yyyy - ???? ??????????
-//const char compile_time[] PROGMEM    = __TIME__;     // hh:mm:ss - ????? ??????????
-//const char str_prog_name[] PROGMEM   = "\r\nAtMega1284p v2.1 Static IP ICMP (ping) client-server WIZNET_5500 ETHERNET 03/12/2018\r\n"; // Program name
 
-//#if defined(__AVR_ATmega128__)
-//const char PROGMEM str_mcu[] = "ATmega128"; //CPU is m128
-//#elif defined (__AVR_ATmega2560__)
-//const char PROGMEM str_mcu[] = "ATmega2560"; //CPU is m2560
-//#elif defined (__AVR_ATmega2561__)
-//const char PROGMEM str_mcu[] = "ATmega2561"; //CPU is m2561
-//#elif defined (__AVR_ATmega328P__)
-//const char PROGMEM str_mcu[] = "ATmega328P"; //CPU is m328p
-//#elif defined (__AVR_ATmega32U4__)
-//const char PROGMEM str_mcu[] = "ATmega32u4"; //CPU is m32u4
-//#elif defined (__AVR_ATmega644P__)
-//const char PROGMEM str_mcu[] = "ATmega644p"; //CPU is m644p
-//#elif defined (__AVR_ATmega1284P__)
-//const char PROGMEM str_mcu[] = "ATmega1284p"; //CPU is m1284p
-//#elif defined (__AVR_ATmega256RFR2__)
-//const char PROGMEM str_mcu[] = "ATmega256RFR2"; //CPU is 256RFR2
-//#else
-//const char PROGMEM str_mcu[] = "Unknown CPU"; //CPU is unknown
-//#endif
 
 
 //FUNC headers
@@ -172,43 +162,9 @@ static inline unsigned long millis(void)
 //#define UART_BAUD_RATE      19200
 #define UART_BAUD_RATE      38400
 
-//static int uart0_putchar(char ch,FILE *stream);
-//static void uart0_rx_flash(void);
 
 FILE uart_str = FDEV_SETUP_STREAM(printCHAR, NULL, _FDEV_SETUP_RW);
-//PS. stdin ?? ????????????, ?.?. ??????? ? ??? ???????? ????? uart.h - api:
 
-/*
- * ?.?. ???????? ???
-        c = uart1_getc();
-        if (( c & UART_NO_DATA ) == 0)
-        {
-           uart1_putc( (unsigned char)c );
-        }
- ??? ???? ?????? ??? ????? ?????? ?? ???? ? ????? ???? ????????????? (+ ???????? ????? UART RX RINGBUFFER),
- ? ???? ???????? ? ????? stdin->getchar() ??? ????? ??????????? ???? ?????? ?? ????? ?????? (???????)
- ????? UART1_RX, ?.?. ????????.
- */
-
-// STDOUT UART0 TX handler
-//static int uart0_putchar(char ch,FILE *stream)
-//{
-	//uart_putc(ch);
-	//return 0;
-//}
-//
-//// ??????? ????? ?????? UART1 RX (?????? ?????)
-//static void uart0_rx_flash(void)
-//{
-	//// ????????? ??? ?? ring-buffer UART1 RX
-	//unsigned int c;
-	//do
-	//{
-		//c = uart_getc();
-	//} while (( c & UART_NO_DATA ) == 0); // Check RX1 none-empty
-//
-//}
-//***************** UART0: END
 
 
 //***************** WIZCHIP INIT: BEGIN
@@ -292,7 +248,7 @@ void icmp_cb(uint8_t socket,\
 int main()
 {
 	//uint8_t prev_sw1 = 1; // VAR for sw1 pressing detect
-
+	SYS_Init();
 	// INIT MCU
 	avr_init();
 	spi_init(); //SPI Master, MODE0, 4Mhz(DIV4), CS_PB.3=HIGH - suitable for WIZNET 5x00(1/2/5)
@@ -325,7 +281,14 @@ int main()
 	uint32_t timer_ping1 = millis();
 	uint32_t timer_ping2 = millis();
 	while(1)
-	{
+	{	
+// 		appTimer.interval = 1000;
+// 		appTimer.mode = SYS_TIMER_PERIODIC_MODE;
+// 		appTimer.handler = appTimerHandler;
+// 		SYS_TimerStart(&appTimer);
+		SYS_TaskHandler();
+		HAL_UartTaskHandler();
+		APP_TaskHandler();
 		//Here at least every 1sec
 		wdt_reset(); // WDT reset at least every sec
 

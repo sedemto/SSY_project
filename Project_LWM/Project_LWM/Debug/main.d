@@ -29,7 +29,20 @@ main.d main.o: .././main.c \
  .././Application/loopback/../../Ethernet/socket.h \
  .././Application/PING/ping.h \
  .././Application/PING/../../Ethernet/wizchip_conf.h \
- .././Application/PING/../../Ethernet/socket.h
+ .././Application/PING/../../Ethernet/socket.h .././lwm/lwm.h \
+ c:\apps\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\string.h \
+ ../config.h ../stack/hal/atmega256rfr2/inc/hal.h \
+ ../stack/sys/inc/sysTypes.h ../stack/phy/atmega256rfr2/inc/phy.h \
+ c:\apps\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\gcc\avr\5.4.0\include\stdbool.h \
+ ../stack/sys/inc/sysConfig.h ../stack/sys/inc/sys.h \
+ ../stack/sys/inc/sysConfig.h ../stack/nwk/inc/nwk.h \
+ ../stack/nwk/inc/nwkRoute.h ../stack/nwk/inc/nwkRx.h \
+ ../stack/nwk/inc/nwkFrame.h ../stack/nwk/inc/nwkGroup.h \
+ ../stack/nwk/inc/nwkSecurity.h ../stack/nwk/inc/nwkDataReq.h \
+ ../stack/sys/inc/sysTimer.h \
+ ../stack/hal/drivers/atmega256rfr2/inc/halBoard.h \
+ ../stack/hal/atmega256rfr2/inc/halGpio.h \
+ ../stack/hal/drivers/atmega256rfr2/inc/halUart.h ../makra.h
 
 c:\apps\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\avr\io.h:
 
@@ -104,3 +117,47 @@ c:\apps\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\gcc\avr\5.4.0\inc
 .././Application/PING/../../Ethernet/wizchip_conf.h:
 
 .././Application/PING/../../Ethernet/socket.h:
+
+.././lwm/lwm.h:
+
+c:\apps\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\string.h:
+
+../config.h:
+
+../stack/hal/atmega256rfr2/inc/hal.h:
+
+../stack/sys/inc/sysTypes.h:
+
+../stack/phy/atmega256rfr2/inc/phy.h:
+
+c:\apps\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\gcc\avr\5.4.0\include\stdbool.h:
+
+../stack/sys/inc/sysConfig.h:
+
+../stack/sys/inc/sys.h:
+
+../stack/sys/inc/sysConfig.h:
+
+../stack/nwk/inc/nwk.h:
+
+../stack/nwk/inc/nwkRoute.h:
+
+../stack/nwk/inc/nwkRx.h:
+
+../stack/nwk/inc/nwkFrame.h:
+
+../stack/nwk/inc/nwkGroup.h:
+
+../stack/nwk/inc/nwkSecurity.h:
+
+../stack/nwk/inc/nwkDataReq.h:
+
+../stack/sys/inc/sysTimer.h:
+
+../stack/hal/drivers/atmega256rfr2/inc/halBoard.h:
+
+../stack/hal/atmega256rfr2/inc/halGpio.h:
+
+../stack/hal/drivers/atmega256rfr2/inc/halUart.h:
+
+../makra.h:
