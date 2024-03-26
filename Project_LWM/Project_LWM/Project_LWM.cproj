@@ -191,6 +191,69 @@
     <Compile Include="Ethernet\wizchip_conf.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="Internet\MQTT\MQTTClient.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Internet\MQTT\MQTTClient.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Internet\MQTT\MQTTPacket\src\MQTTConnect.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Internet\MQTT\MQTTPacket\src\MQTTConnectClient.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Internet\MQTT\MQTTPacket\src\MQTTConnectServer.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Internet\MQTT\MQTTPacket\src\MQTTDeserializePublish.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Internet\MQTT\MQTTPacket\src\MQTTFormat.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Internet\MQTT\MQTTPacket\src\MQTTFormat.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Internet\MQTT\MQTTPacket\src\MQTTPacket.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Internet\MQTT\MQTTPacket\src\MQTTPacket.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Internet\MQTT\MQTTPacket\src\MQTTPublish.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Internet\MQTT\MQTTPacket\src\MQTTSerializePublish.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Internet\MQTT\MQTTPacket\src\MQTTSubscribe.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Internet\MQTT\MQTTPacket\src\MQTTSubscribeClient.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Internet\MQTT\MQTTPacket\src\MQTTSubscribeServer.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Internet\MQTT\MQTTPacket\src\MQTTUnsubscribe.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Internet\MQTT\MQTTPacket\src\MQTTUnsubscribeClient.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Internet\MQTT\MQTTPacket\src\MQTTUnsubscribeServer.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Internet\MQTT\MQTTPacket\src\StackTrace.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Internet\MQTT\mqtt_interface.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Internet\MQTT\mqtt_interface.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="lwm\lwm.c">
       <SubType>compile</SubType>
     </Compile>
@@ -345,7 +408,11 @@
     <Folder Include="Ethernet" />
     <Folder Include="Ethernet\W5500" />
     <Folder Include="Application" />
+    <Folder Include="Internet\MQTT" />
+    <Folder Include="Internet\MQTT\MQTTPacket" />
+    <Folder Include="Internet\MQTT\MQTTPacket\src" />
     <Folder Include="lwm" />
+    <Folder Include="Internet" />
     <Folder Include="stack" />
     <Folder Include="spi" />
     <Folder Include="stack\hal" />
