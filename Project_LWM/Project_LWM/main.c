@@ -22,17 +22,8 @@
 #include "Application/PING/ping.h"
 #include "lwm/lwm.h"
 
-// test
-// #include "hal.h"
-// #include "phy.h"
-// #include "sys.h"
-// #include "nwk.h"
-// #include "sysTimer.h"
-// #include "halBoard.h"
-// #include "halUart.h"
-// #include "config.h"
 
-//#include <stdlib.h> // itoa etc..
+
 /*
  *
  * (8) ICMP PING Client-Server unblocking via IPRAW mode
@@ -47,7 +38,8 @@
  * https://www.hw-group.com/software/hercules-setup-utility
  *
  */
-
+extern uint8_t buffer[30] = {0};
+extern uint8_t data_ready = 0;
 
 #define PRINTF_EN 1
 #if PRINTF_EN
@@ -245,6 +237,7 @@ void icmp_cb(uint8_t socket,\
 			len_query);
 }
 
+uint8_t test[] = "testttttt";
 int main()
 {
 	//uint8_t prev_sw1 = 1; // VAR for sw1 pressing detect
@@ -280,6 +273,16 @@ int main()
 	uint32_t timer_link_1sec = millis();
 	uint32_t timer_ping1 = millis();
 	uint32_t timer_ping2 = millis();
+	// w5500.h popis pre urcenie TCP/UDP
+	int8_t socket_number = socket(5,Sn_MR_UDP,42000,0x00);
+	if (socket_number == 5){
+		printf("Socket number is correct\n\r");
+	}
+	else{
+		printf("Socket number is incorrect\n\r");
+	}
+	
+	sendto(socket_number,test,sizeof(test),ping_ip,42000);
 	while(1)
 	{	
 // 		appTimer.interval = 1000;
@@ -298,7 +301,11 @@ int main()
 		 * */
 		loopback_tcps(0,ethBuf0,5000);
 		loopback_udps(1, ethBuf0, 3000);
-
+		if(data_ready){
+			sendto(socket_number,buffer,sizeof(buffer),ping_ip,42000);
+			data_ready = 0;
+		}
+		//sendto(socket_number,buffer,sizeof(buffer),ping_ip,42000);
 		/*
 		 * run ICMP (ping) server
 		 */
@@ -311,8 +318,10 @@ int main()
 // 			//PRINTF("\r\n>> PING GW\r\n");
 // 			//ping_request(2, netInfo.gw);
 // 
-// 			PRINTF("\r\n>> PING my PC\r\n");
-// 			ping_request(2, ping_ip); //DEVELOPER PC IP
+// 			
+// 			sendto(socket_number,buffer,sizeof(buffer),ping_ip,42000);
+// 
+// 			PRINTF("\r\n>> sending data\r\n");
 // 		}
 // 
 // 		/*ICM Ping client example #2 - ping DNS google  every 15 sec*/

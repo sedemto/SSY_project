@@ -33,6 +33,7 @@
 #include "halUart.h"
 #include "makra.h"
 
+
 void sendOK(int16_t odesilatel);
 void appDataConf(NWK_DataReq_t *req);
 void HAL_UartBytesReceived(uint16_t bytes);

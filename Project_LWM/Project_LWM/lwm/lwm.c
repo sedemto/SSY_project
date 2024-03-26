@@ -26,6 +26,8 @@ static bool appDataReqBusy = false;
 static uint8_t appDataReqBuffer[APP_BUFFER_SIZE];
 static uint8_t appUartBuffer[APP_BUFFER_SIZE];
 static uint8_t appUartBufferPtr = 0;
+extern uint8_t buffer[30];
+extern uint8_t data_ready;
 
 void sendOK(int16_t odesilatel){
 	if (appDataReqBusy)
@@ -75,20 +77,20 @@ void appTimerHandler(SYS_Timer_t *timer){
 bool appDataInd(NWK_DataInd_t *ind){
 	//char* temp;
 	for (uint8_t i = 0; i < ind->size; i++){
-		printf("%c",ind->data[i]);
+		//printf("%c",ind->data[i]);
+		buffer[i] = ind->data[i];
 		
 	}
 	//printf(temp);
 	sendOK(ind->srcAddr);
-	
-	
+	data_ready = 1;
 	return true;
 }
 bool appDataInd_ACK(NWK_DataInd_t *ind)
 {
 	for (uint8_t i = 0; i < ind->size; i++)
 		HAL_UartWriteByte(ind->data[i]);
-
+	
 	return true;
 }
 
