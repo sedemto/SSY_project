@@ -12,6 +12,30 @@ Ethernet\W5500\w5500.c
 
 Ethernet\wizchip_conf.c
 
+Internet\MQTT\MQTTClient.c
+
+Internet\MQTT\MQTTPacket\src\MQTTConnectClient.c
+
+Internet\MQTT\MQTTPacket\src\MQTTConnectServer.c
+
+Internet\MQTT\MQTTPacket\src\MQTTDeserializePublish.c
+
+Internet\MQTT\MQTTPacket\src\MQTTFormat.c
+
+Internet\MQTT\MQTTPacket\src\MQTTPacket.c
+
+Internet\MQTT\MQTTPacket\src\MQTTSerializePublish.c
+
+Internet\MQTT\MQTTPacket\src\MQTTSubscribeClient.c
+
+Internet\MQTT\MQTTPacket\src\MQTTSubscribeServer.c
+
+Internet\MQTT\MQTTPacket\src\MQTTUnsubscribeClient.c
+
+Internet\MQTT\MQTTPacket\src\MQTTUnsubscribeServer.c
+
+Internet\MQTT\mqtt_interface.c
+
 lwm\lwm.c
 
 main.c

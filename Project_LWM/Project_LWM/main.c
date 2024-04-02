@@ -21,7 +21,8 @@
 #include "Application/loopback/loopback.h"
 #include "Application/PING/ping.h"
 #include "lwm/lwm.h"
-
+#include "mqtt_interface.h"
+#include "MQTTClient.h"
 
 
 /*
@@ -48,6 +49,28 @@ extern uint8_t data_ready = 0;
 #define PRINTF(...)
 #endif
 
+
+#ifdef IP_WORK
+uint8_t mqtt_target[4] = { 34, 249, 184, 60 }; //mqtt IP address
+uint8_t ping_ip[4] = { 192, 168, 53, 109 };
+//NIC metrics for WORK PC
+wiz_NetInfo netInfo = { .mac  = {0x00, 0x08, 0xdc, 0xab, 0xcd, 0xef}, // Mac address
+.ip   = {192, 168, 53, 199},         // IP address
+.sn   = {255, 255, 255, 0},         // Subnet mask
+.dns =  {8,8,8,8},			  // DNS address (google dns)
+.gw   = {192, 168, 53, 1}, // Gateway address
+.dhcp = NETINFO_STATIC};    //Static IP configuration
+#else
+uint8_t mqtt_target[4] = { 34, 249, 184, 60 }; //mqtt IP address
+uint8_t ping_ip[4] = { 192, 168, 53, 109 };
+//NIC metrics for another PC (second IP configuration)
+wiz_NetInfo netInfo = { .mac  = {0x00, 0x08, 0xdc, 0xab, 0xcd, 0xef}, // Mac address
+.ip   = {192, 168, 53, 199},         // IP address
+.sn   = {255, 255, 255, 0},         // Subnet mask
+.dns =  {8,8,8,8},			  // DNS address (google dns)
+.gw   = {192, 168, 53, 1}, // Gateway address
+.dhcp = NETINFO_STATIC};    //Static IP configuration
+#endif
 /*
  * m1284p minimum template, with one button & one led
  */
@@ -63,25 +86,7 @@ extern uint8_t data_ready = 0;
 //#define sw1_conf()      {DDRC &= ~(1<<DDC5); PORTC |= (1<<PORTC5);}
 //#define sw1_read()     (PINC & (1<<PINC5))
 
-#ifdef IP_WORK
-uint8_t ping_ip[4] = { 192, 168, 53, 109 }; //Ping IP address
-//NIC metrics for WORK PC
-wiz_NetInfo netInfo = { .mac  = {0x00, 0x08, 0xdc, 0xab, 0xcd, 0xef}, // Mac address
-		.ip   = {192, 168, 53, 199},         // IP address
-		.sn   = {255, 255, 255, 0},         // Subnet mask
-		.dns =  {8,8,8,8},			  // DNS address (google dns)
-		.gw   = {192, 168, 53, 1}, // Gateway address
-		.dhcp = NETINFO_STATIC};    //Static IP configuration
-#else
-uint8_t ping_ip[4] = { 192, 168, 53, 109 }; //Ping IP address
-//NIC metrics for another PC (second IP configuration)
-wiz_NetInfo netInfo = { .mac  = {0x00, 0x08, 0xdc, 0xab, 0xcd, 0xef}, // Mac address
-		.ip   = {192, 168, 53, 199},         // IP address
-		.sn   = {255, 255, 255, 0},         // Subnet mask
-		.dns =  {8,8,8,8},			  // DNS address (google dns)
-		.gw   = {192, 168, 53, 1}, // Gateway address
-		.dhcp = NETINFO_STATIC};    //Static IP configuration
-#endif
+
 
 //***********Prologue for fast WDT disable & and save reason of reset/power-up: BEGIN
 uint8_t mcucsr_mirror __attribute__ ((section (".noinit")));
@@ -104,11 +109,68 @@ volatile unsigned long _millis; // for millis tick !! Overflow every ~49.7 days
 
 
 
+//******************* MQTT: BEGIN
+#define SOCK_MQTT       5
+// Receive Buffer
+#define MQTT_BUFFER_SIZE	512     // 2048
+uint8_t mqtt_readBuffer[MQTT_BUFFER_SIZE];
+volatile uint16_t mes_id;
+
+//#define PUBLISH_ANALOG_0         "sta/analog/0"
+#define PUBLISH_TEPLOTA_0         "ssy/test/teplota"
+//#define PUBLISH_AVR_DEBUG         "/w5500_avr_dbg"
+
+//MQTT subscribe call-back is here
+void messageArrived(MessageData* md)
+{
+	char _topic_name[64] = "\0";
+	char _message[128] = "\0";
+
+	MQTTMessage* message = md->message;
+	MQTTString* topic = md->topicName;
+	strncpy(_topic_name, topic->lenstring.data, topic->lenstring.len);
+	strncpy(_message, message->payload, message->payloadlen);
+	PRINTF("<<MQTT Sub: [%s] %s", _topic_name , _message);
+}
+
+void mqtt_pub(Client* mqtt_client, char * mqtt_topic, char * mqtt_msg, int mqtt_msg_len)
+{
+	static uint32_t mqtt_pub_count = 0;
+	static uint8_t mqtt_err_cnt = 0;
+	int32_t mqtt_rc;
+
+	wdt_reset();
+	//wdt_disable();
+	PRINTF(">>MQTT pub msg %lu ", ++mqtt_pub_count);
+	MQTTMessage pubMessage;
+	pubMessage.qos = QOS0;
+	pubMessage.id = mes_id++;
+	pubMessage.payloadlen = (size_t)mqtt_msg_len;
+	pubMessage.payload = mqtt_msg;
+	mqtt_rc = MQTTPublish(mqtt_client, mqtt_topic , &pubMessage);
+	//Analize MQTT publish result (for MQTT failover mode)
+	if (mqtt_rc == SUCCESSS)
+	{
+		mqtt_err_cnt  = 0;
+		PRINTF(" - OK\r\n");
+	}
+	else
+	{
+		PRINTF(" - ERROR\r\n");
+		//Reboot device after 20 continuous errors (~ 20sec)
+		if(mqtt_err_cnt++ > 20)
+		{
+			PRINTF("Connection with MQTT Broker was lost!!\r\nReboot the board..\r\n");
+			while(1);
+		}
+	}
+}
+//******************* MQTT: END
 
 //FUNC headers
 static void avr_init(void);
 void timer0_init(void);
-static inline unsigned long millis(void);
+unsigned long millis(void);
 
 //Wiznet FUNC headers
 void print_network_information(void);
@@ -132,7 +194,7 @@ ISR (TIMER0_COMPA_vect)
 	_millis++; // INC millis tick
 }
 
-static inline unsigned long millis(void)
+unsigned long millis(void)
 {
 	unsigned long i;
 	cli();
@@ -237,15 +299,15 @@ void icmp_cb(uint8_t socket,\
 			len_query);
 }
 
-uint8_t test[] = "testttttt";
 int main()
 {
+	
 	//uint8_t prev_sw1 = 1; // VAR for sw1 pressing detect
 	SYS_Init();
 	// INIT MCU
 	avr_init();
 	spi_init(); //SPI Master, MODE0, 4Mhz(DIV4), CS_PB.3=HIGH - suitable for WIZNET 5x00(1/2/5)
-
+	
 
 	// Print program metrics
 	//PRINTF("%S", str_prog_name);// ???????? ?????????
@@ -268,11 +330,49 @@ int main()
 	IO_LIBRARY_Init(); //After that ping must working
 	print_network_information();
 
+
+	//****************MQTT client initialize
+	//Find MQTT broker and connect with it
+	uint8_t mqtt_buf[100];
+	int32_t mqtt_rc = 0;
+	Network mqtt_network;
+	Client mqtt_client;
+	mqtt_network.my_socket = SOCK_MQTT;
+	
+	PRINTF(">>Trying connect to MQTT broker: %d.%d.%d.%d ..\r\n", mqtt_target[0], mqtt_target[1], mqtt_target[2], mqtt_target[3]);
+	NewNetwork(&mqtt_network);
+	ConnectNetwork(&mqtt_network, mqtt_target, 1883);
+	MQTTClient(&mqtt_client, &mqtt_network, 1000, mqtt_buf, 100, mqtt_readBuffer, MQTT_BUFFER_SIZE);
+	
+	//Connection to MQTT broker
+	MQTTPacket_connectData data = MQTTPacket_connectData_initializer;
+	data.willFlag = 0;
+	data.MQTTVersion = 4;//3;
+	data.clientID.cstring = (char*)"w5500_avr_client";
+	data.username.cstring = (char*)"user1234";
+	data.password.cstring = (char*)"\0";
+	data.keepAliveInterval = 60;
+	data.cleansession = 1;
+	mqtt_rc = MQTTConnect(&mqtt_client, &data);
+	if (mqtt_rc == SUCCESSS)
+	{
+		PRINTF("++MQTT Connected SUCCESS: %ld\r\n", mqtt_rc);
+	}
+	else
+	{
+		PRINTF("--MQTT Connected ERROR: %ld\r\n", mqtt_rc);
+		while(1);//Reboot the board
+	}
+	
+	// Subscribe to all topics
+	char SubString[] = "/#";// Subscribe for all that begin from "/"
+	mqtt_rc = MQTTSubscribe(&mqtt_client, SubString, QOS0, messageArrived);
+	PRINTF("Subscribed (%s) %d\r\n", SubString, mqtt_rc);
+
+	uint32_t timer_mqtt_pub_1sec = millis();
 	/* Loopback Test: TCP Server and UDP */
 	// Test for Ethernet data transfer validation
 	uint32_t timer_link_1sec = millis();
-	uint32_t timer_ping1 = millis();
-	uint32_t timer_ping2 = millis();
 	// w5500.h popis pre urcenie TCP/UDP
 	int8_t socket_number = socket(5,Sn_MR_UDP,42000,0x00);
 	if (socket_number == 5){
@@ -281,14 +381,10 @@ int main()
 	else{
 		printf("Socket number is incorrect\n\r");
 	}
-	
-	sendto(socket_number,test,sizeof(test),ping_ip,42000);
+	//mqtt_pub(&mqtt_client, PUBLISH_TEPLOTA_0, 'a', 1);
+	//sendto(socket_number,test,sizeof(test),ping_ip,42000);
 	while(1)
 	{	
-// 		appTimer.interval = 1000;
-// 		appTimer.mode = SYS_TIMER_PERIODIC_MODE;
-// 		appTimer.handler = appTimerHandler;
-// 		SYS_TimerStart(&appTimer);
 		SYS_TaskHandler();
 		HAL_UartTaskHandler();
 		APP_TaskHandler();
@@ -299,12 +395,27 @@ int main()
 		/*
 		 * https://www.hw-group.com/software/hercules-setup-utility
 		 * */
-		loopback_tcps(0,ethBuf0,5000);
-		loopback_udps(1, ethBuf0, 3000);
-		if(data_ready){
-			sendto(socket_number,buffer,sizeof(buffer),ping_ip,42000);
-			data_ready = 0;
-		}
+		//loopback_tcps(0,ethBuf0,5000);
+		//loopback_udps(1, ethBuf0, 3000);
+// 		if(data_ready){
+// 			sendto(socket_number,buffer,sizeof(buffer),ping_ip,42000);
+// 			data_ready = 1;
+// 		}
+		static char _msg[64] = "\0";
+		static int _len;
+//  		if(data_ready){
+//  			_len = sprintf(_msg, "%u",buffer);
+//  			if(_len > 0)
+//  			{
+//  				mqtt_pub(&mqtt_client, PUBLISH_TEPLOTA_0, _msg, _len);
+//  			}
+//  			data_ready = 0;
+//  		}
+		
+
+		// MQTT broker connection and sub receive
+		MQTTYield(&mqtt_client, 100);//~100msec blocking here
+
 		//sendto(socket_number,buffer,sizeof(buffer),ping_ip,42000);
 		/*
 		 * run ICMP (ping) server
@@ -375,6 +486,8 @@ void timer0_init(void)
 	TIMSK0 |= 1<<OCIE0A;	 //IRQ on TIMER0 output compareA
 	sei();
 }
+
+
 
 static void avr_init(void)
 {

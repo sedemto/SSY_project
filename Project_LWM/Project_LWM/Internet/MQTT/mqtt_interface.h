@@ -2,7 +2,7 @@
 #define __MQTT_INTERFACE_H_
 
 #include <stdint.h>
-#include "../../globals.h"
+//#include "../../globals.h"
 
 typedef struct Timer Timer;
 

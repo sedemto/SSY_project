@@ -42,7 +42,17 @@ main.d main.o: .././main.c \
  ../stack/sys/inc/sysTimer.h \
  ../stack/hal/drivers/atmega256rfr2/inc/halBoard.h \
  ../stack/hal/atmega256rfr2/inc/halGpio.h \
- ../stack/hal/drivers/atmega256rfr2/inc/halUart.h ../makra.h
+ ../stack/hal/drivers/atmega256rfr2/inc/halUart.h ../makra.h \
+ ../Internet/MQTT/mqtt_interface.h ../Internet/MQTT/MQTTClient.h \
+ ../Internet/MQTT/MQTTPacket/src/MQTTPacket.h \
+ ../Internet/MQTT/MQTTPacket/src/MQTTConnect.h \
+ ../Internet/MQTT/MQTTPacket/src/MQTTPublish.h \
+ ../Internet/MQTT/MQTTPacket/src/MQTTSubscribe.h \
+ ../Internet/MQTT/MQTTPacket/src/MQTTUnsubscribe.h \
+ ../Internet/MQTT/MQTTPacket/src/MQTTFormat.h \
+ ../Internet/MQTT/MQTTPacket/src/StackTrace.h \
+ ../Internet/MQTT/MQTTPacket/src/MQTTPacket.h \
+ ../Internet/MQTT/mqtt_interface.h
 
 c:\apps\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\avr\io.h:
 
@@ -161,3 +171,25 @@ c:\apps\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\gcc\avr\5.4.0\inc
 ../stack/hal/drivers/atmega256rfr2/inc/halUart.h:
 
 ../makra.h:
+
+../Internet/MQTT/mqtt_interface.h:
+
+../Internet/MQTT/MQTTClient.h:
+
+../Internet/MQTT/MQTTPacket/src/MQTTPacket.h:
+
+../Internet/MQTT/MQTTPacket/src/MQTTConnect.h:
+
+../Internet/MQTT/MQTTPacket/src/MQTTPublish.h:
+
+../Internet/MQTT/MQTTPacket/src/MQTTSubscribe.h:
+
+../Internet/MQTT/MQTTPacket/src/MQTTUnsubscribe.h:
+
+../Internet/MQTT/MQTTPacket/src/MQTTFormat.h:
+
+../Internet/MQTT/MQTTPacket/src/StackTrace.h:
+
+../Internet/MQTT/MQTTPacket/src/MQTTPacket.h:
+
+../Internet/MQTT/mqtt_interface.h:

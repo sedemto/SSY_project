@@ -38,7 +38,11 @@ SUBDIRS :=  \
 ../Ethernet \
 ../Ethernet/W5500 \
 ../Application \
+../Internet/MQTT \
+../Internet/MQTT/MQTTPacket \
+../Internet/MQTT/MQTTPacket/src \
 ../lwm \
+../Internet \
 ../stack \
 ../spi \
 ../stack/hal \
@@ -69,6 +73,18 @@ C_SRCS +=  \
 ../Ethernet/socket.c \
 ../Ethernet/W5500/w5500.c \
 ../Ethernet/wizchip_conf.c \
+../Internet/MQTT/MQTTClient.c \
+../Internet/MQTT/MQTTPacket/src/MQTTConnectClient.c \
+../Internet/MQTT/MQTTPacket/src/MQTTConnectServer.c \
+../Internet/MQTT/MQTTPacket/src/MQTTDeserializePublish.c \
+../Internet/MQTT/MQTTPacket/src/MQTTFormat.c \
+../Internet/MQTT/MQTTPacket/src/MQTTPacket.c \
+../Internet/MQTT/MQTTPacket/src/MQTTSerializePublish.c \
+../Internet/MQTT/MQTTPacket/src/MQTTSubscribeClient.c \
+../Internet/MQTT/MQTTPacket/src/MQTTSubscribeServer.c \
+../Internet/MQTT/MQTTPacket/src/MQTTUnsubscribeClient.c \
+../Internet/MQTT/MQTTPacket/src/MQTTUnsubscribeServer.c \
+../Internet/MQTT/mqtt_interface.c \
 ../lwm/lwm.c \
 ../main.c \
 ../spi/spi.c \
@@ -104,6 +120,18 @@ Application/PING/ping.o \
 Ethernet/socket.o \
 Ethernet/W5500/w5500.o \
 Ethernet/wizchip_conf.o \
+Internet/MQTT/MQTTClient.o \
+Internet/MQTT/MQTTPacket/src/MQTTConnectClient.o \
+Internet/MQTT/MQTTPacket/src/MQTTConnectServer.o \
+Internet/MQTT/MQTTPacket/src/MQTTDeserializePublish.o \
+Internet/MQTT/MQTTPacket/src/MQTTFormat.o \
+Internet/MQTT/MQTTPacket/src/MQTTPacket.o \
+Internet/MQTT/MQTTPacket/src/MQTTSerializePublish.o \
+Internet/MQTT/MQTTPacket/src/MQTTSubscribeClient.o \
+Internet/MQTT/MQTTPacket/src/MQTTSubscribeServer.o \
+Internet/MQTT/MQTTPacket/src/MQTTUnsubscribeClient.o \
+Internet/MQTT/MQTTPacket/src/MQTTUnsubscribeServer.o \
+Internet/MQTT/mqtt_interface.o \
 lwm/lwm.o \
 main.o \
 spi/spi.o \
@@ -132,6 +160,18 @@ Application/PING/ping.o \
 Ethernet/socket.o \
 Ethernet/W5500/w5500.o \
 Ethernet/wizchip_conf.o \
+Internet/MQTT/MQTTClient.o \
+Internet/MQTT/MQTTPacket/src/MQTTConnectClient.o \
+Internet/MQTT/MQTTPacket/src/MQTTConnectServer.o \
+Internet/MQTT/MQTTPacket/src/MQTTDeserializePublish.o \
+Internet/MQTT/MQTTPacket/src/MQTTFormat.o \
+Internet/MQTT/MQTTPacket/src/MQTTPacket.o \
+Internet/MQTT/MQTTPacket/src/MQTTSerializePublish.o \
+Internet/MQTT/MQTTPacket/src/MQTTSubscribeClient.o \
+Internet/MQTT/MQTTPacket/src/MQTTSubscribeServer.o \
+Internet/MQTT/MQTTPacket/src/MQTTUnsubscribeClient.o \
+Internet/MQTT/MQTTPacket/src/MQTTUnsubscribeServer.o \
+Internet/MQTT/mqtt_interface.o \
 lwm/lwm.o \
 main.o \
 spi/spi.o \
@@ -160,6 +200,18 @@ Application/PING/ping.d \
 Ethernet/socket.d \
 Ethernet/W5500/w5500.d \
 Ethernet/wizchip_conf.d \
+Internet/MQTT/MQTTClient.d \
+Internet/MQTT/MQTTPacket/src/MQTTConnectClient.d \
+Internet/MQTT/MQTTPacket/src/MQTTConnectServer.d \
+Internet/MQTT/MQTTPacket/src/MQTTDeserializePublish.d \
+Internet/MQTT/MQTTPacket/src/MQTTFormat.d \
+Internet/MQTT/MQTTPacket/src/MQTTPacket.d \
+Internet/MQTT/MQTTPacket/src/MQTTSerializePublish.d \
+Internet/MQTT/MQTTPacket/src/MQTTSubscribeClient.d \
+Internet/MQTT/MQTTPacket/src/MQTTSubscribeServer.d \
+Internet/MQTT/MQTTPacket/src/MQTTUnsubscribeClient.d \
+Internet/MQTT/MQTTPacket/src/MQTTUnsubscribeServer.d \
+Internet/MQTT/mqtt_interface.d \
 lwm/lwm.d \
 main.d \
 spi/spi.d \
@@ -188,6 +240,18 @@ Application/PING/ping.d \
 Ethernet/socket.d \
 Ethernet/W5500/w5500.d \
 Ethernet/wizchip_conf.d \
+Internet/MQTT/MQTTClient.d \
+Internet/MQTT/MQTTPacket/src/MQTTConnectClient.d \
+Internet/MQTT/MQTTPacket/src/MQTTConnectServer.d \
+Internet/MQTT/MQTTPacket/src/MQTTDeserializePublish.d \
+Internet/MQTT/MQTTPacket/src/MQTTFormat.d \
+Internet/MQTT/MQTTPacket/src/MQTTPacket.d \
+Internet/MQTT/MQTTPacket/src/MQTTSerializePublish.d \
+Internet/MQTT/MQTTPacket/src/MQTTSubscribeClient.d \
+Internet/MQTT/MQTTPacket/src/MQTTSubscribeServer.d \
+Internet/MQTT/MQTTPacket/src/MQTTUnsubscribeClient.d \
+Internet/MQTT/MQTTPacket/src/MQTTUnsubscribeServer.d \
+Internet/MQTT/mqtt_interface.d \
 lwm/lwm.d \
 main.d \
 spi/spi.d \
@@ -227,182 +291,266 @@ LINKER_SCRIPT_DEP+=
 Application/loopback/loopback.o: ../Application/loopback/loopback.c
 	@echo Building file: $<
 	@echo Invoking: AVR/GNU C Compiler : 5.4.0
-	$(QUOTE)C:\Apps\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DDEBUG -DF_CPU=8000000 -DPHY_ATMEGARFR2 -DHAL_ATMEGA256RFR2  -I"C:\Apps\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\include" -I"../stack/hal/atmega256rfr2/inc" -I"../stack/nwk/inc" -I"../stack/phy/atmega256rfr2/inc" -I"../stack/sys/inc" -I"../stack/hal/drivers/atmega256rfr2/inc" -I".."  -Og -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -mrelax -g2 -Wall -mmcu=atmega256rfr2 -B "C:\Apps\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\gcc\dev\atmega256rfr2" -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	$(QUOTE)C:\Apps\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DDEBUG -DF_CPU=8000000 -DPHY_ATMEGARFR2 -DHAL_ATMEGA256RFR2  -I"C:\Apps\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\include" -I"../stack/hal/atmega256rfr2/inc" -I"../stack/nwk/inc" -I"../stack/phy/atmega256rfr2/inc" -I"../stack/sys/inc" -I"../stack/hal/drivers/atmega256rfr2/inc" -I".." -I"../Internet/MQTT/MQTTPacket/src" -I"../Internet/MQTT/MQTTPacket" -I"../Ethernet/W5500" -I"../Ethernet" -I"../Internet/MQTT"  -Og -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -mrelax -g2 -Wall -mmcu=atmega256rfr2 -B "C:\Apps\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\gcc\dev\atmega256rfr2" -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
 	@echo Finished building: $<
 	
 
 Application/PING/ping.o: ../Application/PING/ping.c
 	@echo Building file: $<
 	@echo Invoking: AVR/GNU C Compiler : 5.4.0
-	$(QUOTE)C:\Apps\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DDEBUG -DF_CPU=8000000 -DPHY_ATMEGARFR2 -DHAL_ATMEGA256RFR2  -I"C:\Apps\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\include" -I"../stack/hal/atmega256rfr2/inc" -I"../stack/nwk/inc" -I"../stack/phy/atmega256rfr2/inc" -I"../stack/sys/inc" -I"../stack/hal/drivers/atmega256rfr2/inc" -I".."  -Og -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -mrelax -g2 -Wall -mmcu=atmega256rfr2 -B "C:\Apps\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\gcc\dev\atmega256rfr2" -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	$(QUOTE)C:\Apps\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DDEBUG -DF_CPU=8000000 -DPHY_ATMEGARFR2 -DHAL_ATMEGA256RFR2  -I"C:\Apps\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\include" -I"../stack/hal/atmega256rfr2/inc" -I"../stack/nwk/inc" -I"../stack/phy/atmega256rfr2/inc" -I"../stack/sys/inc" -I"../stack/hal/drivers/atmega256rfr2/inc" -I".." -I"../Internet/MQTT/MQTTPacket/src" -I"../Internet/MQTT/MQTTPacket" -I"../Ethernet/W5500" -I"../Ethernet" -I"../Internet/MQTT"  -Og -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -mrelax -g2 -Wall -mmcu=atmega256rfr2 -B "C:\Apps\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\gcc\dev\atmega256rfr2" -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
 	@echo Finished building: $<
 	
 
 Ethernet/socket.o: ../Ethernet/socket.c
 	@echo Building file: $<
 	@echo Invoking: AVR/GNU C Compiler : 5.4.0
-	$(QUOTE)C:\Apps\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DDEBUG -DF_CPU=8000000 -DPHY_ATMEGARFR2 -DHAL_ATMEGA256RFR2  -I"C:\Apps\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\include" -I"../stack/hal/atmega256rfr2/inc" -I"../stack/nwk/inc" -I"../stack/phy/atmega256rfr2/inc" -I"../stack/sys/inc" -I"../stack/hal/drivers/atmega256rfr2/inc" -I".."  -Og -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -mrelax -g2 -Wall -mmcu=atmega256rfr2 -B "C:\Apps\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\gcc\dev\atmega256rfr2" -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	$(QUOTE)C:\Apps\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DDEBUG -DF_CPU=8000000 -DPHY_ATMEGARFR2 -DHAL_ATMEGA256RFR2  -I"C:\Apps\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\include" -I"../stack/hal/atmega256rfr2/inc" -I"../stack/nwk/inc" -I"../stack/phy/atmega256rfr2/inc" -I"../stack/sys/inc" -I"../stack/hal/drivers/atmega256rfr2/inc" -I".." -I"../Internet/MQTT/MQTTPacket/src" -I"../Internet/MQTT/MQTTPacket" -I"../Ethernet/W5500" -I"../Ethernet" -I"../Internet/MQTT"  -Og -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -mrelax -g2 -Wall -mmcu=atmega256rfr2 -B "C:\Apps\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\gcc\dev\atmega256rfr2" -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
 	@echo Finished building: $<
 	
 
 Ethernet/W5500/w5500.o: ../Ethernet/W5500/w5500.c
 	@echo Building file: $<
 	@echo Invoking: AVR/GNU C Compiler : 5.4.0
-	$(QUOTE)C:\Apps\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DDEBUG -DF_CPU=8000000 -DPHY_ATMEGARFR2 -DHAL_ATMEGA256RFR2  -I"C:\Apps\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\include" -I"../stack/hal/atmega256rfr2/inc" -I"../stack/nwk/inc" -I"../stack/phy/atmega256rfr2/inc" -I"../stack/sys/inc" -I"../stack/hal/drivers/atmega256rfr2/inc" -I".."  -Og -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -mrelax -g2 -Wall -mmcu=atmega256rfr2 -B "C:\Apps\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\gcc\dev\atmega256rfr2" -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	$(QUOTE)C:\Apps\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DDEBUG -DF_CPU=8000000 -DPHY_ATMEGARFR2 -DHAL_ATMEGA256RFR2  -I"C:\Apps\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\include" -I"../stack/hal/atmega256rfr2/inc" -I"../stack/nwk/inc" -I"../stack/phy/atmega256rfr2/inc" -I"../stack/sys/inc" -I"../stack/hal/drivers/atmega256rfr2/inc" -I".." -I"../Internet/MQTT/MQTTPacket/src" -I"../Internet/MQTT/MQTTPacket" -I"../Ethernet/W5500" -I"../Ethernet" -I"../Internet/MQTT"  -Og -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -mrelax -g2 -Wall -mmcu=atmega256rfr2 -B "C:\Apps\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\gcc\dev\atmega256rfr2" -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
 	@echo Finished building: $<
 	
 
 Ethernet/wizchip_conf.o: ../Ethernet/wizchip_conf.c
 	@echo Building file: $<
 	@echo Invoking: AVR/GNU C Compiler : 5.4.0
-	$(QUOTE)C:\Apps\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DDEBUG -DF_CPU=8000000 -DPHY_ATMEGARFR2 -DHAL_ATMEGA256RFR2  -I"C:\Apps\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\include" -I"../stack/hal/atmega256rfr2/inc" -I"../stack/nwk/inc" -I"../stack/phy/atmega256rfr2/inc" -I"../stack/sys/inc" -I"../stack/hal/drivers/atmega256rfr2/inc" -I".."  -Og -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -mrelax -g2 -Wall -mmcu=atmega256rfr2 -B "C:\Apps\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\gcc\dev\atmega256rfr2" -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	$(QUOTE)C:\Apps\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DDEBUG -DF_CPU=8000000 -DPHY_ATMEGARFR2 -DHAL_ATMEGA256RFR2  -I"C:\Apps\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\include" -I"../stack/hal/atmega256rfr2/inc" -I"../stack/nwk/inc" -I"../stack/phy/atmega256rfr2/inc" -I"../stack/sys/inc" -I"../stack/hal/drivers/atmega256rfr2/inc" -I".." -I"../Internet/MQTT/MQTTPacket/src" -I"../Internet/MQTT/MQTTPacket" -I"../Ethernet/W5500" -I"../Ethernet" -I"../Internet/MQTT"  -Og -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -mrelax -g2 -Wall -mmcu=atmega256rfr2 -B "C:\Apps\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\gcc\dev\atmega256rfr2" -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	@echo Finished building: $<
+	
+
+Internet/MQTT/MQTTClient.o: ../Internet/MQTT/MQTTClient.c
+	@echo Building file: $<
+	@echo Invoking: AVR/GNU C Compiler : 5.4.0
+	$(QUOTE)C:\Apps\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DDEBUG -DF_CPU=8000000 -DPHY_ATMEGARFR2 -DHAL_ATMEGA256RFR2  -I"C:\Apps\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\include" -I"../stack/hal/atmega256rfr2/inc" -I"../stack/nwk/inc" -I"../stack/phy/atmega256rfr2/inc" -I"../stack/sys/inc" -I"../stack/hal/drivers/atmega256rfr2/inc" -I".." -I"../Internet/MQTT/MQTTPacket/src" -I"../Internet/MQTT/MQTTPacket" -I"../Ethernet/W5500" -I"../Ethernet" -I"../Internet/MQTT"  -Og -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -mrelax -g2 -Wall -mmcu=atmega256rfr2 -B "C:\Apps\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\gcc\dev\atmega256rfr2" -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	@echo Finished building: $<
+	
+
+Internet/MQTT/MQTTPacket/src/MQTTConnectClient.o: ../Internet/MQTT/MQTTPacket/src/MQTTConnectClient.c
+	@echo Building file: $<
+	@echo Invoking: AVR/GNU C Compiler : 5.4.0
+	$(QUOTE)C:\Apps\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DDEBUG -DF_CPU=8000000 -DPHY_ATMEGARFR2 -DHAL_ATMEGA256RFR2  -I"C:\Apps\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\include" -I"../stack/hal/atmega256rfr2/inc" -I"../stack/nwk/inc" -I"../stack/phy/atmega256rfr2/inc" -I"../stack/sys/inc" -I"../stack/hal/drivers/atmega256rfr2/inc" -I".." -I"../Internet/MQTT/MQTTPacket/src" -I"../Internet/MQTT/MQTTPacket" -I"../Ethernet/W5500" -I"../Ethernet" -I"../Internet/MQTT"  -Og -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -mrelax -g2 -Wall -mmcu=atmega256rfr2 -B "C:\Apps\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\gcc\dev\atmega256rfr2" -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	@echo Finished building: $<
+	
+
+Internet/MQTT/MQTTPacket/src/MQTTConnectServer.o: ../Internet/MQTT/MQTTPacket/src/MQTTConnectServer.c
+	@echo Building file: $<
+	@echo Invoking: AVR/GNU C Compiler : 5.4.0
+	$(QUOTE)C:\Apps\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DDEBUG -DF_CPU=8000000 -DPHY_ATMEGARFR2 -DHAL_ATMEGA256RFR2  -I"C:\Apps\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\include" -I"../stack/hal/atmega256rfr2/inc" -I"../stack/nwk/inc" -I"../stack/phy/atmega256rfr2/inc" -I"../stack/sys/inc" -I"../stack/hal/drivers/atmega256rfr2/inc" -I".." -I"../Internet/MQTT/MQTTPacket/src" -I"../Internet/MQTT/MQTTPacket" -I"../Ethernet/W5500" -I"../Ethernet" -I"../Internet/MQTT"  -Og -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -mrelax -g2 -Wall -mmcu=atmega256rfr2 -B "C:\Apps\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\gcc\dev\atmega256rfr2" -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	@echo Finished building: $<
+	
+
+Internet/MQTT/MQTTPacket/src/MQTTDeserializePublish.o: ../Internet/MQTT/MQTTPacket/src/MQTTDeserializePublish.c
+	@echo Building file: $<
+	@echo Invoking: AVR/GNU C Compiler : 5.4.0
+	$(QUOTE)C:\Apps\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DDEBUG -DF_CPU=8000000 -DPHY_ATMEGARFR2 -DHAL_ATMEGA256RFR2  -I"C:\Apps\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\include" -I"../stack/hal/atmega256rfr2/inc" -I"../stack/nwk/inc" -I"../stack/phy/atmega256rfr2/inc" -I"../stack/sys/inc" -I"../stack/hal/drivers/atmega256rfr2/inc" -I".." -I"../Internet/MQTT/MQTTPacket/src" -I"../Internet/MQTT/MQTTPacket" -I"../Ethernet/W5500" -I"../Ethernet" -I"../Internet/MQTT"  -Og -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -mrelax -g2 -Wall -mmcu=atmega256rfr2 -B "C:\Apps\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\gcc\dev\atmega256rfr2" -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	@echo Finished building: $<
+	
+
+Internet/MQTT/MQTTPacket/src/MQTTFormat.o: ../Internet/MQTT/MQTTPacket/src/MQTTFormat.c
+	@echo Building file: $<
+	@echo Invoking: AVR/GNU C Compiler : 5.4.0
+	$(QUOTE)C:\Apps\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DDEBUG -DF_CPU=8000000 -DPHY_ATMEGARFR2 -DHAL_ATMEGA256RFR2  -I"C:\Apps\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\include" -I"../stack/hal/atmega256rfr2/inc" -I"../stack/nwk/inc" -I"../stack/phy/atmega256rfr2/inc" -I"../stack/sys/inc" -I"../stack/hal/drivers/atmega256rfr2/inc" -I".." -I"../Internet/MQTT/MQTTPacket/src" -I"../Internet/MQTT/MQTTPacket" -I"../Ethernet/W5500" -I"../Ethernet" -I"../Internet/MQTT"  -Og -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -mrelax -g2 -Wall -mmcu=atmega256rfr2 -B "C:\Apps\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\gcc\dev\atmega256rfr2" -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	@echo Finished building: $<
+	
+
+Internet/MQTT/MQTTPacket/src/MQTTPacket.o: ../Internet/MQTT/MQTTPacket/src/MQTTPacket.c
+	@echo Building file: $<
+	@echo Invoking: AVR/GNU C Compiler : 5.4.0
+	$(QUOTE)C:\Apps\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DDEBUG -DF_CPU=8000000 -DPHY_ATMEGARFR2 -DHAL_ATMEGA256RFR2  -I"C:\Apps\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\include" -I"../stack/hal/atmega256rfr2/inc" -I"../stack/nwk/inc" -I"../stack/phy/atmega256rfr2/inc" -I"../stack/sys/inc" -I"../stack/hal/drivers/atmega256rfr2/inc" -I".." -I"../Internet/MQTT/MQTTPacket/src" -I"../Internet/MQTT/MQTTPacket" -I"../Ethernet/W5500" -I"../Ethernet" -I"../Internet/MQTT"  -Og -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -mrelax -g2 -Wall -mmcu=atmega256rfr2 -B "C:\Apps\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\gcc\dev\atmega256rfr2" -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	@echo Finished building: $<
+	
+
+Internet/MQTT/MQTTPacket/src/MQTTSerializePublish.o: ../Internet/MQTT/MQTTPacket/src/MQTTSerializePublish.c
+	@echo Building file: $<
+	@echo Invoking: AVR/GNU C Compiler : 5.4.0
+	$(QUOTE)C:\Apps\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DDEBUG -DF_CPU=8000000 -DPHY_ATMEGARFR2 -DHAL_ATMEGA256RFR2  -I"C:\Apps\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\include" -I"../stack/hal/atmega256rfr2/inc" -I"../stack/nwk/inc" -I"../stack/phy/atmega256rfr2/inc" -I"../stack/sys/inc" -I"../stack/hal/drivers/atmega256rfr2/inc" -I".." -I"../Internet/MQTT/MQTTPacket/src" -I"../Internet/MQTT/MQTTPacket" -I"../Ethernet/W5500" -I"../Ethernet" -I"../Internet/MQTT"  -Og -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -mrelax -g2 -Wall -mmcu=atmega256rfr2 -B "C:\Apps\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\gcc\dev\atmega256rfr2" -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	@echo Finished building: $<
+	
+
+Internet/MQTT/MQTTPacket/src/MQTTSubscribeClient.o: ../Internet/MQTT/MQTTPacket/src/MQTTSubscribeClient.c
+	@echo Building file: $<
+	@echo Invoking: AVR/GNU C Compiler : 5.4.0
+	$(QUOTE)C:\Apps\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DDEBUG -DF_CPU=8000000 -DPHY_ATMEGARFR2 -DHAL_ATMEGA256RFR2  -I"C:\Apps\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\include" -I"../stack/hal/atmega256rfr2/inc" -I"../stack/nwk/inc" -I"../stack/phy/atmega256rfr2/inc" -I"../stack/sys/inc" -I"../stack/hal/drivers/atmega256rfr2/inc" -I".." -I"../Internet/MQTT/MQTTPacket/src" -I"../Internet/MQTT/MQTTPacket" -I"../Ethernet/W5500" -I"../Ethernet" -I"../Internet/MQTT"  -Og -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -mrelax -g2 -Wall -mmcu=atmega256rfr2 -B "C:\Apps\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\gcc\dev\atmega256rfr2" -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	@echo Finished building: $<
+	
+
+Internet/MQTT/MQTTPacket/src/MQTTSubscribeServer.o: ../Internet/MQTT/MQTTPacket/src/MQTTSubscribeServer.c
+	@echo Building file: $<
+	@echo Invoking: AVR/GNU C Compiler : 5.4.0
+	$(QUOTE)C:\Apps\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DDEBUG -DF_CPU=8000000 -DPHY_ATMEGARFR2 -DHAL_ATMEGA256RFR2  -I"C:\Apps\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\include" -I"../stack/hal/atmega256rfr2/inc" -I"../stack/nwk/inc" -I"../stack/phy/atmega256rfr2/inc" -I"../stack/sys/inc" -I"../stack/hal/drivers/atmega256rfr2/inc" -I".." -I"../Internet/MQTT/MQTTPacket/src" -I"../Internet/MQTT/MQTTPacket" -I"../Ethernet/W5500" -I"../Ethernet" -I"../Internet/MQTT"  -Og -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -mrelax -g2 -Wall -mmcu=atmega256rfr2 -B "C:\Apps\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\gcc\dev\atmega256rfr2" -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	@echo Finished building: $<
+	
+
+Internet/MQTT/MQTTPacket/src/MQTTUnsubscribeClient.o: ../Internet/MQTT/MQTTPacket/src/MQTTUnsubscribeClient.c
+	@echo Building file: $<
+	@echo Invoking: AVR/GNU C Compiler : 5.4.0
+	$(QUOTE)C:\Apps\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DDEBUG -DF_CPU=8000000 -DPHY_ATMEGARFR2 -DHAL_ATMEGA256RFR2  -I"C:\Apps\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\include" -I"../stack/hal/atmega256rfr2/inc" -I"../stack/nwk/inc" -I"../stack/phy/atmega256rfr2/inc" -I"../stack/sys/inc" -I"../stack/hal/drivers/atmega256rfr2/inc" -I".." -I"../Internet/MQTT/MQTTPacket/src" -I"../Internet/MQTT/MQTTPacket" -I"../Ethernet/W5500" -I"../Ethernet" -I"../Internet/MQTT"  -Og -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -mrelax -g2 -Wall -mmcu=atmega256rfr2 -B "C:\Apps\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\gcc\dev\atmega256rfr2" -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	@echo Finished building: $<
+	
+
+Internet/MQTT/MQTTPacket/src/MQTTUnsubscribeServer.o: ../Internet/MQTT/MQTTPacket/src/MQTTUnsubscribeServer.c
+	@echo Building file: $<
+	@echo Invoking: AVR/GNU C Compiler : 5.4.0
+	$(QUOTE)C:\Apps\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DDEBUG -DF_CPU=8000000 -DPHY_ATMEGARFR2 -DHAL_ATMEGA256RFR2  -I"C:\Apps\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\include" -I"../stack/hal/atmega256rfr2/inc" -I"../stack/nwk/inc" -I"../stack/phy/atmega256rfr2/inc" -I"../stack/sys/inc" -I"../stack/hal/drivers/atmega256rfr2/inc" -I".." -I"../Internet/MQTT/MQTTPacket/src" -I"../Internet/MQTT/MQTTPacket" -I"../Ethernet/W5500" -I"../Ethernet" -I"../Internet/MQTT"  -Og -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -mrelax -g2 -Wall -mmcu=atmega256rfr2 -B "C:\Apps\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\gcc\dev\atmega256rfr2" -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	@echo Finished building: $<
+	
+
+Internet/MQTT/mqtt_interface.o: ../Internet/MQTT/mqtt_interface.c
+	@echo Building file: $<
+	@echo Invoking: AVR/GNU C Compiler : 5.4.0
+	$(QUOTE)C:\Apps\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DDEBUG -DF_CPU=8000000 -DPHY_ATMEGARFR2 -DHAL_ATMEGA256RFR2  -I"C:\Apps\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\include" -I"../stack/hal/atmega256rfr2/inc" -I"../stack/nwk/inc" -I"../stack/phy/atmega256rfr2/inc" -I"../stack/sys/inc" -I"../stack/hal/drivers/atmega256rfr2/inc" -I".." -I"../Internet/MQTT/MQTTPacket/src" -I"../Internet/MQTT/MQTTPacket" -I"../Ethernet/W5500" -I"../Ethernet" -I"../Internet/MQTT"  -Og -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -mrelax -g2 -Wall -mmcu=atmega256rfr2 -B "C:\Apps\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\gcc\dev\atmega256rfr2" -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
 	@echo Finished building: $<
 	
 
 lwm/lwm.o: ../lwm/lwm.c
 	@echo Building file: $<
 	@echo Invoking: AVR/GNU C Compiler : 5.4.0
-	$(QUOTE)C:\Apps\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DDEBUG -DF_CPU=8000000 -DPHY_ATMEGARFR2 -DHAL_ATMEGA256RFR2  -I"C:\Apps\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\include" -I"../stack/hal/atmega256rfr2/inc" -I"../stack/nwk/inc" -I"../stack/phy/atmega256rfr2/inc" -I"../stack/sys/inc" -I"../stack/hal/drivers/atmega256rfr2/inc" -I".."  -Og -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -mrelax -g2 -Wall -mmcu=atmega256rfr2 -B "C:\Apps\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\gcc\dev\atmega256rfr2" -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	$(QUOTE)C:\Apps\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DDEBUG -DF_CPU=8000000 -DPHY_ATMEGARFR2 -DHAL_ATMEGA256RFR2  -I"C:\Apps\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\include" -I"../stack/hal/atmega256rfr2/inc" -I"../stack/nwk/inc" -I"../stack/phy/atmega256rfr2/inc" -I"../stack/sys/inc" -I"../stack/hal/drivers/atmega256rfr2/inc" -I".." -I"../Internet/MQTT/MQTTPacket/src" -I"../Internet/MQTT/MQTTPacket" -I"../Ethernet/W5500" -I"../Ethernet" -I"../Internet/MQTT"  -Og -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -mrelax -g2 -Wall -mmcu=atmega256rfr2 -B "C:\Apps\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\gcc\dev\atmega256rfr2" -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
 	@echo Finished building: $<
 	
 
 ./main.o: .././main.c
 	@echo Building file: $<
 	@echo Invoking: AVR/GNU C Compiler : 5.4.0
-	$(QUOTE)C:\Apps\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DDEBUG -DF_CPU=8000000 -DPHY_ATMEGARFR2 -DHAL_ATMEGA256RFR2  -I"C:\Apps\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\include" -I"../stack/hal/atmega256rfr2/inc" -I"../stack/nwk/inc" -I"../stack/phy/atmega256rfr2/inc" -I"../stack/sys/inc" -I"../stack/hal/drivers/atmega256rfr2/inc" -I".."  -Og -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -mrelax -g2 -Wall -mmcu=atmega256rfr2 -B "C:\Apps\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\gcc\dev\atmega256rfr2" -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	$(QUOTE)C:\Apps\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DDEBUG -DF_CPU=8000000 -DPHY_ATMEGARFR2 -DHAL_ATMEGA256RFR2  -I"C:\Apps\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\include" -I"../stack/hal/atmega256rfr2/inc" -I"../stack/nwk/inc" -I"../stack/phy/atmega256rfr2/inc" -I"../stack/sys/inc" -I"../stack/hal/drivers/atmega256rfr2/inc" -I".." -I"../Internet/MQTT/MQTTPacket/src" -I"../Internet/MQTT/MQTTPacket" -I"../Ethernet/W5500" -I"../Ethernet" -I"../Internet/MQTT"  -Og -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -mrelax -g2 -Wall -mmcu=atmega256rfr2 -B "C:\Apps\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\gcc\dev\atmega256rfr2" -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
 	@echo Finished building: $<
 	
 
 spi/spi.o: ../spi/spi.c
 	@echo Building file: $<
 	@echo Invoking: AVR/GNU C Compiler : 5.4.0
-	$(QUOTE)C:\Apps\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DDEBUG -DF_CPU=8000000 -DPHY_ATMEGARFR2 -DHAL_ATMEGA256RFR2  -I"C:\Apps\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\include" -I"../stack/hal/atmega256rfr2/inc" -I"../stack/nwk/inc" -I"../stack/phy/atmega256rfr2/inc" -I"../stack/sys/inc" -I"../stack/hal/drivers/atmega256rfr2/inc" -I".."  -Og -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -mrelax -g2 -Wall -mmcu=atmega256rfr2 -B "C:\Apps\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\gcc\dev\atmega256rfr2" -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	$(QUOTE)C:\Apps\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DDEBUG -DF_CPU=8000000 -DPHY_ATMEGARFR2 -DHAL_ATMEGA256RFR2  -I"C:\Apps\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\include" -I"../stack/hal/atmega256rfr2/inc" -I"../stack/nwk/inc" -I"../stack/phy/atmega256rfr2/inc" -I"../stack/sys/inc" -I"../stack/hal/drivers/atmega256rfr2/inc" -I".." -I"../Internet/MQTT/MQTTPacket/src" -I"../Internet/MQTT/MQTTPacket" -I"../Ethernet/W5500" -I"../Ethernet" -I"../Internet/MQTT"  -Og -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -mrelax -g2 -Wall -mmcu=atmega256rfr2 -B "C:\Apps\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\gcc\dev\atmega256rfr2" -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
 	@echo Finished building: $<
 	
 
 stack/hal/atmega256rfr2/src/hal.o: ../stack/hal/atmega256rfr2/src/hal.c
 	@echo Building file: $<
 	@echo Invoking: AVR/GNU C Compiler : 5.4.0
-	$(QUOTE)C:\Apps\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DDEBUG -DF_CPU=8000000 -DPHY_ATMEGARFR2 -DHAL_ATMEGA256RFR2  -I"C:\Apps\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\include" -I"../stack/hal/atmega256rfr2/inc" -I"../stack/nwk/inc" -I"../stack/phy/atmega256rfr2/inc" -I"../stack/sys/inc" -I"../stack/hal/drivers/atmega256rfr2/inc" -I".."  -Og -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -mrelax -g2 -Wall -mmcu=atmega256rfr2 -B "C:\Apps\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\gcc\dev\atmega256rfr2" -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	$(QUOTE)C:\Apps\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DDEBUG -DF_CPU=8000000 -DPHY_ATMEGARFR2 -DHAL_ATMEGA256RFR2  -I"C:\Apps\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\include" -I"../stack/hal/atmega256rfr2/inc" -I"../stack/nwk/inc" -I"../stack/phy/atmega256rfr2/inc" -I"../stack/sys/inc" -I"../stack/hal/drivers/atmega256rfr2/inc" -I".." -I"../Internet/MQTT/MQTTPacket/src" -I"../Internet/MQTT/MQTTPacket" -I"../Ethernet/W5500" -I"../Ethernet" -I"../Internet/MQTT"  -Og -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -mrelax -g2 -Wall -mmcu=atmega256rfr2 -B "C:\Apps\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\gcc\dev\atmega256rfr2" -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
 	@echo Finished building: $<
 	
 
 stack/hal/atmega256rfr2/src/halTimer.o: ../stack/hal/atmega256rfr2/src/halTimer.c
 	@echo Building file: $<
 	@echo Invoking: AVR/GNU C Compiler : 5.4.0
-	$(QUOTE)C:\Apps\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DDEBUG -DF_CPU=8000000 -DPHY_ATMEGARFR2 -DHAL_ATMEGA256RFR2  -I"C:\Apps\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\include" -I"../stack/hal/atmega256rfr2/inc" -I"../stack/nwk/inc" -I"../stack/phy/atmega256rfr2/inc" -I"../stack/sys/inc" -I"../stack/hal/drivers/atmega256rfr2/inc" -I".."  -Og -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -mrelax -g2 -Wall -mmcu=atmega256rfr2 -B "C:\Apps\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\gcc\dev\atmega256rfr2" -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	$(QUOTE)C:\Apps\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DDEBUG -DF_CPU=8000000 -DPHY_ATMEGARFR2 -DHAL_ATMEGA256RFR2  -I"C:\Apps\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\include" -I"../stack/hal/atmega256rfr2/inc" -I"../stack/nwk/inc" -I"../stack/phy/atmega256rfr2/inc" -I"../stack/sys/inc" -I"../stack/hal/drivers/atmega256rfr2/inc" -I".." -I"../Internet/MQTT/MQTTPacket/src" -I"../Internet/MQTT/MQTTPacket" -I"../Ethernet/W5500" -I"../Ethernet" -I"../Internet/MQTT"  -Og -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -mrelax -g2 -Wall -mmcu=atmega256rfr2 -B "C:\Apps\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\gcc\dev\atmega256rfr2" -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
 	@echo Finished building: $<
 	
 
 stack/hal/drivers/atmega256rfr2/src/halSleep.o: ../stack/hal/drivers/atmega256rfr2/src/halSleep.c
 	@echo Building file: $<
 	@echo Invoking: AVR/GNU C Compiler : 5.4.0
-	$(QUOTE)C:\Apps\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DDEBUG -DF_CPU=8000000 -DPHY_ATMEGARFR2 -DHAL_ATMEGA256RFR2  -I"C:\Apps\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\include" -I"../stack/hal/atmega256rfr2/inc" -I"../stack/nwk/inc" -I"../stack/phy/atmega256rfr2/inc" -I"../stack/sys/inc" -I"../stack/hal/drivers/atmega256rfr2/inc" -I".."  -Og -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -mrelax -g2 -Wall -mmcu=atmega256rfr2 -B "C:\Apps\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\gcc\dev\atmega256rfr2" -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	$(QUOTE)C:\Apps\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DDEBUG -DF_CPU=8000000 -DPHY_ATMEGARFR2 -DHAL_ATMEGA256RFR2  -I"C:\Apps\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\include" -I"../stack/hal/atmega256rfr2/inc" -I"../stack/nwk/inc" -I"../stack/phy/atmega256rfr2/inc" -I"../stack/sys/inc" -I"../stack/hal/drivers/atmega256rfr2/inc" -I".." -I"../Internet/MQTT/MQTTPacket/src" -I"../Internet/MQTT/MQTTPacket" -I"../Ethernet/W5500" -I"../Ethernet" -I"../Internet/MQTT"  -Og -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -mrelax -g2 -Wall -mmcu=atmega256rfr2 -B "C:\Apps\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\gcc\dev\atmega256rfr2" -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
 	@echo Finished building: $<
 	
 
 stack/hal/drivers/atmega256rfr2/src/halUart.o: ../stack/hal/drivers/atmega256rfr2/src/halUart.c
 	@echo Building file: $<
 	@echo Invoking: AVR/GNU C Compiler : 5.4.0
-	$(QUOTE)C:\Apps\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DDEBUG -DF_CPU=8000000 -DPHY_ATMEGARFR2 -DHAL_ATMEGA256RFR2  -I"C:\Apps\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\include" -I"../stack/hal/atmega256rfr2/inc" -I"../stack/nwk/inc" -I"../stack/phy/atmega256rfr2/inc" -I"../stack/sys/inc" -I"../stack/hal/drivers/atmega256rfr2/inc" -I".."  -Og -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -mrelax -g2 -Wall -mmcu=atmega256rfr2 -B "C:\Apps\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\gcc\dev\atmega256rfr2" -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	$(QUOTE)C:\Apps\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DDEBUG -DF_CPU=8000000 -DPHY_ATMEGARFR2 -DHAL_ATMEGA256RFR2  -I"C:\Apps\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\include" -I"../stack/hal/atmega256rfr2/inc" -I"../stack/nwk/inc" -I"../stack/phy/atmega256rfr2/inc" -I"../stack/sys/inc" -I"../stack/hal/drivers/atmega256rfr2/inc" -I".." -I"../Internet/MQTT/MQTTPacket/src" -I"../Internet/MQTT/MQTTPacket" -I"../Ethernet/W5500" -I"../Ethernet" -I"../Internet/MQTT"  -Og -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -mrelax -g2 -Wall -mmcu=atmega256rfr2 -B "C:\Apps\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\gcc\dev\atmega256rfr2" -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
 	@echo Finished building: $<
 	
 
 stack/nwk/src/nwk.o: ../stack/nwk/src/nwk.c
 	@echo Building file: $<
 	@echo Invoking: AVR/GNU C Compiler : 5.4.0
-	$(QUOTE)C:\Apps\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DDEBUG -DF_CPU=8000000 -DPHY_ATMEGARFR2 -DHAL_ATMEGA256RFR2  -I"C:\Apps\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\include" -I"../stack/hal/atmega256rfr2/inc" -I"../stack/nwk/inc" -I"../stack/phy/atmega256rfr2/inc" -I"../stack/sys/inc" -I"../stack/hal/drivers/atmega256rfr2/inc" -I".."  -Og -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -mrelax -g2 -Wall -mmcu=atmega256rfr2 -B "C:\Apps\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\gcc\dev\atmega256rfr2" -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	$(QUOTE)C:\Apps\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DDEBUG -DF_CPU=8000000 -DPHY_ATMEGARFR2 -DHAL_ATMEGA256RFR2  -I"C:\Apps\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\include" -I"../stack/hal/atmega256rfr2/inc" -I"../stack/nwk/inc" -I"../stack/phy/atmega256rfr2/inc" -I"../stack/sys/inc" -I"../stack/hal/drivers/atmega256rfr2/inc" -I".." -I"../Internet/MQTT/MQTTPacket/src" -I"../Internet/MQTT/MQTTPacket" -I"../Ethernet/W5500" -I"../Ethernet" -I"../Internet/MQTT"  -Og -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -mrelax -g2 -Wall -mmcu=atmega256rfr2 -B "C:\Apps\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\gcc\dev\atmega256rfr2" -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
 	@echo Finished building: $<
 	
 
 stack/nwk/src/nwkDataReq.o: ../stack/nwk/src/nwkDataReq.c
 	@echo Building file: $<
 	@echo Invoking: AVR/GNU C Compiler : 5.4.0
-	$(QUOTE)C:\Apps\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DDEBUG -DF_CPU=8000000 -DPHY_ATMEGARFR2 -DHAL_ATMEGA256RFR2  -I"C:\Apps\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\include" -I"../stack/hal/atmega256rfr2/inc" -I"../stack/nwk/inc" -I"../stack/phy/atmega256rfr2/inc" -I"../stack/sys/inc" -I"../stack/hal/drivers/atmega256rfr2/inc" -I".."  -Og -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -mrelax -g2 -Wall -mmcu=atmega256rfr2 -B "C:\Apps\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\gcc\dev\atmega256rfr2" -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	$(QUOTE)C:\Apps\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DDEBUG -DF_CPU=8000000 -DPHY_ATMEGARFR2 -DHAL_ATMEGA256RFR2  -I"C:\Apps\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\include" -I"../stack/hal/atmega256rfr2/inc" -I"../stack/nwk/inc" -I"../stack/phy/atmega256rfr2/inc" -I"../stack/sys/inc" -I"../stack/hal/drivers/atmega256rfr2/inc" -I".." -I"../Internet/MQTT/MQTTPacket/src" -I"../Internet/MQTT/MQTTPacket" -I"../Ethernet/W5500" -I"../Ethernet" -I"../Internet/MQTT"  -Og -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -mrelax -g2 -Wall -mmcu=atmega256rfr2 -B "C:\Apps\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\gcc\dev\atmega256rfr2" -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
 	@echo Finished building: $<
 	
 
 stack/nwk/src/nwkFrame.o: ../stack/nwk/src/nwkFrame.c
 	@echo Building file: $<
 	@echo Invoking: AVR/GNU C Compiler : 5.4.0
-	$(QUOTE)C:\Apps\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DDEBUG -DF_CPU=8000000 -DPHY_ATMEGARFR2 -DHAL_ATMEGA256RFR2  -I"C:\Apps\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\include" -I"../stack/hal/atmega256rfr2/inc" -I"../stack/nwk/inc" -I"../stack/phy/atmega256rfr2/inc" -I"../stack/sys/inc" -I"../stack/hal/drivers/atmega256rfr2/inc" -I".."  -Og -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -mrelax -g2 -Wall -mmcu=atmega256rfr2 -B "C:\Apps\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\gcc\dev\atmega256rfr2" -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	$(QUOTE)C:\Apps\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DDEBUG -DF_CPU=8000000 -DPHY_ATMEGARFR2 -DHAL_ATMEGA256RFR2  -I"C:\Apps\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\include" -I"../stack/hal/atmega256rfr2/inc" -I"../stack/nwk/inc" -I"../stack/phy/atmega256rfr2/inc" -I"../stack/sys/inc" -I"../stack/hal/drivers/atmega256rfr2/inc" -I".." -I"../Internet/MQTT/MQTTPacket/src" -I"../Internet/MQTT/MQTTPacket" -I"../Ethernet/W5500" -I"../Ethernet" -I"../Internet/MQTT"  -Og -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -mrelax -g2 -Wall -mmcu=atmega256rfr2 -B "C:\Apps\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\gcc\dev\atmega256rfr2" -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
 	@echo Finished building: $<
 	
 
 stack/nwk/src/nwkGroup.o: ../stack/nwk/src/nwkGroup.c
 	@echo Building file: $<
 	@echo Invoking: AVR/GNU C Compiler : 5.4.0
-	$(QUOTE)C:\Apps\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DDEBUG -DF_CPU=8000000 -DPHY_ATMEGARFR2 -DHAL_ATMEGA256RFR2  -I"C:\Apps\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\include" -I"../stack/hal/atmega256rfr2/inc" -I"../stack/nwk/inc" -I"../stack/phy/atmega256rfr2/inc" -I"../stack/sys/inc" -I"../stack/hal/drivers/atmega256rfr2/inc" -I".."  -Og -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -mrelax -g2 -Wall -mmcu=atmega256rfr2 -B "C:\Apps\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\gcc\dev\atmega256rfr2" -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	$(QUOTE)C:\Apps\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DDEBUG -DF_CPU=8000000 -DPHY_ATMEGARFR2 -DHAL_ATMEGA256RFR2  -I"C:\Apps\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\include" -I"../stack/hal/atmega256rfr2/inc" -I"../stack/nwk/inc" -I"../stack/phy/atmega256rfr2/inc" -I"../stack/sys/inc" -I"../stack/hal/drivers/atmega256rfr2/inc" -I".." -I"../Internet/MQTT/MQTTPacket/src" -I"../Internet/MQTT/MQTTPacket" -I"../Ethernet/W5500" -I"../Ethernet" -I"../Internet/MQTT"  -Og -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -mrelax -g2 -Wall -mmcu=atmega256rfr2 -B "C:\Apps\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\gcc\dev\atmega256rfr2" -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
 	@echo Finished building: $<
 	
 
 stack/nwk/src/nwkRoute.o: ../stack/nwk/src/nwkRoute.c
 	@echo Building file: $<
 	@echo Invoking: AVR/GNU C Compiler : 5.4.0
-	$(QUOTE)C:\Apps\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DDEBUG -DF_CPU=8000000 -DPHY_ATMEGARFR2 -DHAL_ATMEGA256RFR2  -I"C:\Apps\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\include" -I"../stack/hal/atmega256rfr2/inc" -I"../stack/nwk/inc" -I"../stack/phy/atmega256rfr2/inc" -I"../stack/sys/inc" -I"../stack/hal/drivers/atmega256rfr2/inc" -I".."  -Og -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -mrelax -g2 -Wall -mmcu=atmega256rfr2 -B "C:\Apps\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\gcc\dev\atmega256rfr2" -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	$(QUOTE)C:\Apps\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DDEBUG -DF_CPU=8000000 -DPHY_ATMEGARFR2 -DHAL_ATMEGA256RFR2  -I"C:\Apps\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\include" -I"../stack/hal/atmega256rfr2/inc" -I"../stack/nwk/inc" -I"../stack/phy/atmega256rfr2/inc" -I"../stack/sys/inc" -I"../stack/hal/drivers/atmega256rfr2/inc" -I".." -I"../Internet/MQTT/MQTTPacket/src" -I"../Internet/MQTT/MQTTPacket" -I"../Ethernet/W5500" -I"../Ethernet" -I"../Internet/MQTT"  -Og -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -mrelax -g2 -Wall -mmcu=atmega256rfr2 -B "C:\Apps\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\gcc\dev\atmega256rfr2" -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
 	@echo Finished building: $<
 	
 
 stack/nwk/src/nwkRouteDiscovery.o: ../stack/nwk/src/nwkRouteDiscovery.c
 	@echo Building file: $<
 	@echo Invoking: AVR/GNU C Compiler : 5.4.0
-	$(QUOTE)C:\Apps\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DDEBUG -DF_CPU=8000000 -DPHY_ATMEGARFR2 -DHAL_ATMEGA256RFR2  -I"C:\Apps\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\include" -I"../stack/hal/atmega256rfr2/inc" -I"../stack/nwk/inc" -I"../stack/phy/atmega256rfr2/inc" -I"../stack/sys/inc" -I"../stack/hal/drivers/atmega256rfr2/inc" -I".."  -Og -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -mrelax -g2 -Wall -mmcu=atmega256rfr2 -B "C:\Apps\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\gcc\dev\atmega256rfr2" -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	$(QUOTE)C:\Apps\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DDEBUG -DF_CPU=8000000 -DPHY_ATMEGARFR2 -DHAL_ATMEGA256RFR2  -I"C:\Apps\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\include" -I"../stack/hal/atmega256rfr2/inc" -I"../stack/nwk/inc" -I"../stack/phy/atmega256rfr2/inc" -I"../stack/sys/inc" -I"../stack/hal/drivers/atmega256rfr2/inc" -I".." -I"../Internet/MQTT/MQTTPacket/src" -I"../Internet/MQTT/MQTTPacket" -I"../Ethernet/W5500" -I"../Ethernet" -I"../Internet/MQTT"  -Og -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -mrelax -g2 -Wall -mmcu=atmega256rfr2 -B "C:\Apps\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\gcc\dev\atmega256rfr2" -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
 	@echo Finished building: $<
 	
 
 stack/nwk/src/nwkRx.o: ../stack/nwk/src/nwkRx.c
 	@echo Building file: $<
 	@echo Invoking: AVR/GNU C Compiler : 5.4.0
-	$(QUOTE)C:\Apps\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DDEBUG -DF_CPU=8000000 -DPHY_ATMEGARFR2 -DHAL_ATMEGA256RFR2  -I"C:\Apps\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\include" -I"../stack/hal/atmega256rfr2/inc" -I"../stack/nwk/inc" -I"../stack/phy/atmega256rfr2/inc" -I"../stack/sys/inc" -I"../stack/hal/drivers/atmega256rfr2/inc" -I".."  -Og -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -mrelax -g2 -Wall -mmcu=atmega256rfr2 -B "C:\Apps\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\gcc\dev\atmega256rfr2" -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	$(QUOTE)C:\Apps\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DDEBUG -DF_CPU=8000000 -DPHY_ATMEGARFR2 -DHAL_ATMEGA256RFR2  -I"C:\Apps\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\include" -I"../stack/hal/atmega256rfr2/inc" -I"../stack/nwk/inc" -I"../stack/phy/atmega256rfr2/inc" -I"../stack/sys/inc" -I"../stack/hal/drivers/atmega256rfr2/inc" -I".." -I"../Internet/MQTT/MQTTPacket/src" -I"../Internet/MQTT/MQTTPacket" -I"../Ethernet/W5500" -I"../Ethernet" -I"../Internet/MQTT"  -Og -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -mrelax -g2 -Wall -mmcu=atmega256rfr2 -B "C:\Apps\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\gcc\dev\atmega256rfr2" -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
 	@echo Finished building: $<
 	
 
 stack/nwk/src/nwkSecurity.o: ../stack/nwk/src/nwkSecurity.c
 	@echo Building file: $<
 	@echo Invoking: AVR/GNU C Compiler : 5.4.0
-	$(QUOTE)C:\Apps\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DDEBUG -DF_CPU=8000000 -DPHY_ATMEGARFR2 -DHAL_ATMEGA256RFR2  -I"C:\Apps\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\include" -I"../stack/hal/atmega256rfr2/inc" -I"../stack/nwk/inc" -I"../stack/phy/atmega256rfr2/inc" -I"../stack/sys/inc" -I"../stack/hal/drivers/atmega256rfr2/inc" -I".."  -Og -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -mrelax -g2 -Wall -mmcu=atmega256rfr2 -B "C:\Apps\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\gcc\dev\atmega256rfr2" -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	$(QUOTE)C:\Apps\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DDEBUG -DF_CPU=8000000 -DPHY_ATMEGARFR2 -DHAL_ATMEGA256RFR2  -I"C:\Apps\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\include" -I"../stack/hal/atmega256rfr2/inc" -I"../stack/nwk/inc" -I"../stack/phy/atmega256rfr2/inc" -I"../stack/sys/inc" -I"../stack/hal/drivers/atmega256rfr2/inc" -I".." -I"../Internet/MQTT/MQTTPacket/src" -I"../Internet/MQTT/MQTTPacket" -I"../Ethernet/W5500" -I"../Ethernet" -I"../Internet/MQTT"  -Og -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -mrelax -g2 -Wall -mmcu=atmega256rfr2 -B "C:\Apps\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\gcc\dev\atmega256rfr2" -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
 	@echo Finished building: $<
 	
 
 stack/nwk/src/nwkTx.o: ../stack/nwk/src/nwkTx.c
 	@echo Building file: $<
 	@echo Invoking: AVR/GNU C Compiler : 5.4.0
-	$(QUOTE)C:\Apps\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DDEBUG -DF_CPU=8000000 -DPHY_ATMEGARFR2 -DHAL_ATMEGA256RFR2  -I"C:\Apps\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\include" -I"../stack/hal/atmega256rfr2/inc" -I"../stack/nwk/inc" -I"../stack/phy/atmega256rfr2/inc" -I"../stack/sys/inc" -I"../stack/hal/drivers/atmega256rfr2/inc" -I".."  -Og -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -mrelax -g2 -Wall -mmcu=atmega256rfr2 -B "C:\Apps\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\gcc\dev\atmega256rfr2" -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	$(QUOTE)C:\Apps\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DDEBUG -DF_CPU=8000000 -DPHY_ATMEGARFR2 -DHAL_ATMEGA256RFR2  -I"C:\Apps\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\include" -I"../stack/hal/atmega256rfr2/inc" -I"../stack/nwk/inc" -I"../stack/phy/atmega256rfr2/inc" -I"../stack/sys/inc" -I"../stack/hal/drivers/atmega256rfr2/inc" -I".." -I"../Internet/MQTT/MQTTPacket/src" -I"../Internet/MQTT/MQTTPacket" -I"../Ethernet/W5500" -I"../Ethernet" -I"../Internet/MQTT"  -Og -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -mrelax -g2 -Wall -mmcu=atmega256rfr2 -B "C:\Apps\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\gcc\dev\atmega256rfr2" -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
 	@echo Finished building: $<
 	
 
 stack/phy/atmega256rfr2/src/phy.o: ../stack/phy/atmega256rfr2/src/phy.c
 	@echo Building file: $<
 	@echo Invoking: AVR/GNU C Compiler : 5.4.0
-	$(QUOTE)C:\Apps\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DDEBUG -DF_CPU=8000000 -DPHY_ATMEGARFR2 -DHAL_ATMEGA256RFR2  -I"C:\Apps\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\include" -I"../stack/hal/atmega256rfr2/inc" -I"../stack/nwk/inc" -I"../stack/phy/atmega256rfr2/inc" -I"../stack/sys/inc" -I"../stack/hal/drivers/atmega256rfr2/inc" -I".."  -Og -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -mrelax -g2 -Wall -mmcu=atmega256rfr2 -B "C:\Apps\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\gcc\dev\atmega256rfr2" -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	$(QUOTE)C:\Apps\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DDEBUG -DF_CPU=8000000 -DPHY_ATMEGARFR2 -DHAL_ATMEGA256RFR2  -I"C:\Apps\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\include" -I"../stack/hal/atmega256rfr2/inc" -I"../stack/nwk/inc" -I"../stack/phy/atmega256rfr2/inc" -I"../stack/sys/inc" -I"../stack/hal/drivers/atmega256rfr2/inc" -I".." -I"../Internet/MQTT/MQTTPacket/src" -I"../Internet/MQTT/MQTTPacket" -I"../Ethernet/W5500" -I"../Ethernet" -I"../Internet/MQTT"  -Og -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -mrelax -g2 -Wall -mmcu=atmega256rfr2 -B "C:\Apps\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\gcc\dev\atmega256rfr2" -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
 	@echo Finished building: $<
 	
 
 stack/sys/src/sys.o: ../stack/sys/src/sys.c
 	@echo Building file: $<
 	@echo Invoking: AVR/GNU C Compiler : 5.4.0
-	$(QUOTE)C:\Apps\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DDEBUG -DF_CPU=8000000 -DPHY_ATMEGARFR2 -DHAL_ATMEGA256RFR2  -I"C:\Apps\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\include" -I"../stack/hal/atmega256rfr2/inc" -I"../stack/nwk/inc" -I"../stack/phy/atmega256rfr2/inc" -I"../stack/sys/inc" -I"../stack/hal/drivers/atmega256rfr2/inc" -I".."  -Og -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -mrelax -g2 -Wall -mmcu=atmega256rfr2 -B "C:\Apps\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\gcc\dev\atmega256rfr2" -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	$(QUOTE)C:\Apps\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DDEBUG -DF_CPU=8000000 -DPHY_ATMEGARFR2 -DHAL_ATMEGA256RFR2  -I"C:\Apps\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\include" -I"../stack/hal/atmega256rfr2/inc" -I"../stack/nwk/inc" -I"../stack/phy/atmega256rfr2/inc" -I"../stack/sys/inc" -I"../stack/hal/drivers/atmega256rfr2/inc" -I".." -I"../Internet/MQTT/MQTTPacket/src" -I"../Internet/MQTT/MQTTPacket" -I"../Ethernet/W5500" -I"../Ethernet" -I"../Internet/MQTT"  -Og -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -mrelax -g2 -Wall -mmcu=atmega256rfr2 -B "C:\Apps\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\gcc\dev\atmega256rfr2" -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
 	@echo Finished building: $<
 	
 
 stack/sys/src/sysEncrypt.o: ../stack/sys/src/sysEncrypt.c
 	@echo Building file: $<
 	@echo Invoking: AVR/GNU C Compiler : 5.4.0
-	$(QUOTE)C:\Apps\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DDEBUG -DF_CPU=8000000 -DPHY_ATMEGARFR2 -DHAL_ATMEGA256RFR2  -I"C:\Apps\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\include" -I"../stack/hal/atmega256rfr2/inc" -I"../stack/nwk/inc" -I"../stack/phy/atmega256rfr2/inc" -I"../stack/sys/inc" -I"../stack/hal/drivers/atmega256rfr2/inc" -I".."  -Og -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -mrelax -g2 -Wall -mmcu=atmega256rfr2 -B "C:\Apps\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\gcc\dev\atmega256rfr2" -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	$(QUOTE)C:\Apps\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DDEBUG -DF_CPU=8000000 -DPHY_ATMEGARFR2 -DHAL_ATMEGA256RFR2  -I"C:\Apps\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\include" -I"../stack/hal/atmega256rfr2/inc" -I"../stack/nwk/inc" -I"../stack/phy/atmega256rfr2/inc" -I"../stack/sys/inc" -I"../stack/hal/drivers/atmega256rfr2/inc" -I".." -I"../Internet/MQTT/MQTTPacket/src" -I"../Internet/MQTT/MQTTPacket" -I"../Ethernet/W5500" -I"../Ethernet" -I"../Internet/MQTT"  -Og -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -mrelax -g2 -Wall -mmcu=atmega256rfr2 -B "C:\Apps\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\gcc\dev\atmega256rfr2" -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
 	@echo Finished building: $<
 	
 
 stack/sys/src/sysTimer.o: ../stack/sys/src/sysTimer.c
 	@echo Building file: $<
 	@echo Invoking: AVR/GNU C Compiler : 5.4.0
-	$(QUOTE)C:\Apps\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DDEBUG -DF_CPU=8000000 -DPHY_ATMEGARFR2 -DHAL_ATMEGA256RFR2  -I"C:\Apps\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\include" -I"../stack/hal/atmega256rfr2/inc" -I"../stack/nwk/inc" -I"../stack/phy/atmega256rfr2/inc" -I"../stack/sys/inc" -I"../stack/hal/drivers/atmega256rfr2/inc" -I".."  -Og -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -mrelax -g2 -Wall -mmcu=atmega256rfr2 -B "C:\Apps\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\gcc\dev\atmega256rfr2" -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	$(QUOTE)C:\Apps\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DDEBUG -DF_CPU=8000000 -DPHY_ATMEGARFR2 -DHAL_ATMEGA256RFR2  -I"C:\Apps\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\include" -I"../stack/hal/atmega256rfr2/inc" -I"../stack/nwk/inc" -I"../stack/phy/atmega256rfr2/inc" -I"../stack/sys/inc" -I"../stack/hal/drivers/atmega256rfr2/inc" -I".." -I"../Internet/MQTT/MQTTPacket/src" -I"../Internet/MQTT/MQTTPacket" -I"../Ethernet/W5500" -I"../Ethernet" -I"../Internet/MQTT"  -Og -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -mrelax -g2 -Wall -mmcu=atmega256rfr2 -B "C:\Apps\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\gcc\dev\atmega256rfr2" -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
 	@echo Finished building: $<
 	
 
 uart/uart.o: ../uart/uart.c
 	@echo Building file: $<
 	@echo Invoking: AVR/GNU C Compiler : 5.4.0
-	$(QUOTE)C:\Apps\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DDEBUG -DF_CPU=8000000 -DPHY_ATMEGARFR2 -DHAL_ATMEGA256RFR2  -I"C:\Apps\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\include" -I"../stack/hal/atmega256rfr2/inc" -I"../stack/nwk/inc" -I"../stack/phy/atmega256rfr2/inc" -I"../stack/sys/inc" -I"../stack/hal/drivers/atmega256rfr2/inc" -I".."  -Og -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -mrelax -g2 -Wall -mmcu=atmega256rfr2 -B "C:\Apps\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\gcc\dev\atmega256rfr2" -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	$(QUOTE)C:\Apps\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DDEBUG -DF_CPU=8000000 -DPHY_ATMEGARFR2 -DHAL_ATMEGA256RFR2  -I"C:\Apps\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\include" -I"../stack/hal/atmega256rfr2/inc" -I"../stack/nwk/inc" -I"../stack/phy/atmega256rfr2/inc" -I"../stack/sys/inc" -I"../stack/hal/drivers/atmega256rfr2/inc" -I".." -I"../Internet/MQTT/MQTTPacket/src" -I"../Internet/MQTT/MQTTPacket" -I"../Ethernet/W5500" -I"../Ethernet" -I"../Internet/MQTT"  -Og -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -mrelax -g2 -Wall -mmcu=atmega256rfr2 -B "C:\Apps\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\gcc\dev\atmega256rfr2" -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
 	@echo Finished building: $<
 	
 

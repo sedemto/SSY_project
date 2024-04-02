@@ -9,6 +9,10 @@
 
 #ifndef MAKRA_H_
 #define MAKRA_H_
+
+
+
+
 //Bitove operace
 #define sbi_(var, mask)  ((var) |= (uint8_t)(1 << mask))
 #define cbi_(var, mask)  ((var) &= (uint8_t)~(1 << mask))
