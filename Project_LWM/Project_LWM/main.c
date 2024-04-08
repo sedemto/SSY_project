@@ -381,7 +381,7 @@ int main()
 	else{
 		printf("Socket number is incorrect\n\r");
 	}*/
-	mqtt_pub(&mqtt_client, PUBLISH_TEPLOTA_0, "AhojAhojCotTy", 14);
+	mqtt_pub(&mqtt_client, PUBLISH_TEPLOTA_0, "AhojAhojCoTy\r\n", 15);
 	//sendto(socket_number,test,sizeof(test),ping_ip,42000);
 	while(1)
 	{	
@@ -404,17 +404,22 @@ int main()
 		static char _msg[64] = "\0";
 		static int _len;
   		if(data_ready){
-  			_len = sprintf(_msg, "%u",buffer);
-  			if(_len > 0)
-  			{
-  				mqtt_pub(&mqtt_client, PUBLISH_TEPLOTA_0, _msg, _len);
+  			_len = sprintf(_msg, "%s",buffer);
+   			if(_len > 0)
+   			{
+  			mqtt_pub(&mqtt_client, PUBLISH_TEPLOTA_0,_msg,_len );
   			}
   			data_ready = 0;
   		}
 		
-
+ 		if((millis()-timer_mqtt_pub_1sec)> 5000)
+ 		{
+			timer_mqtt_pub_1sec = millis();
+			MQTTYield(&mqtt_client, 100);
+			wdt_reset();
+ 		}
 		// MQTT broker connection and sub receive
-		MQTTYield(&mqtt_client, 100);//~100msec blocking here
+		//MQTTYield(&mqtt_client, 100);//~100msec blocking here
 
 		//sendto(socket_number,buffer,sizeof(buffer),ping_ip,42000);
 		/*
