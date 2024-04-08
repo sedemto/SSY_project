@@ -51,7 +51,7 @@ extern uint8_t data_ready = 0;
 
 
 #ifdef IP_WORK
-uint8_t mqtt_target[4] = { 34, 249, 184, 60 }; //mqtt IP address
+uint8_t mqtt_target[4] = {34, 249, 184, 60}; //mqtt IP address
 uint8_t ping_ip[4] = { 192, 168, 53, 109 };
 //NIC metrics for WORK PC
 wiz_NetInfo netInfo = { .mac  = {0x00, 0x08, 0xdc, 0xab, 0xcd, 0xef}, // Mac address
@@ -61,7 +61,7 @@ wiz_NetInfo netInfo = { .mac  = {0x00, 0x08, 0xdc, 0xab, 0xcd, 0xef}, // Mac add
 .gw   = {192, 168, 53, 1}, // Gateway address
 .dhcp = NETINFO_STATIC};    //Static IP configuration
 #else
-uint8_t mqtt_target[4] = { 34, 249, 184, 60 }; //mqtt IP address
+uint8_t mqtt_target[4] = {34, 249, 184, 60}; //mqtt IP address
 uint8_t ping_ip[4] = { 192, 168, 53, 109 };
 //NIC metrics for another PC (second IP configuration)
 wiz_NetInfo netInfo = { .mac  = {0x00, 0x08, 0xdc, 0xab, 0xcd, 0xef}, // Mac address
@@ -117,7 +117,7 @@ uint8_t mqtt_readBuffer[MQTT_BUFFER_SIZE];
 volatile uint16_t mes_id;
 
 //#define PUBLISH_ANALOG_0         "sta/analog/0"
-#define PUBLISH_TEPLOTA_0         "ssy/test/teplota"
+#define PUBLISH_TEPLOTA_0         "/ssy/test/teplota"
 //#define PUBLISH_AVR_DEBUG         "/w5500_avr_dbg"
 
 //MQTT subscribe call-back is here
@@ -281,7 +281,7 @@ void IO_LIBRARY_Init(void) {
  * seq_query - ICMP query Sequence Number : ID Seq num [0..0xFFFF]
  * len_query - ICMP query length of the data
  */
-void icmp_cb(uint8_t socket,\
+/*void icmp_cb(uint8_t socket,\
 		uint8_t* ip_query,\
 		uint8_t type_query,\
 		uint16_t id_query,\
@@ -297,7 +297,7 @@ void icmp_cb(uint8_t socket,\
 			id_query,\
 			seq_query,\
 			len_query);
-}
+}*/
 
 int main()
 {
@@ -365,7 +365,7 @@ int main()
 	}
 	
 	// Subscribe to all topics
-	char SubString[] = "/#";// Subscribe for all that begin from "/"
+	char SubString[] = "/ssy/test/teplota";// Subscribe for all that begin from "/"
 	mqtt_rc = MQTTSubscribe(&mqtt_client, SubString, QOS0, messageArrived);
 	PRINTF("Subscribed (%s) %d\r\n", SubString, mqtt_rc);
 
@@ -374,14 +374,14 @@ int main()
 	// Test for Ethernet data transfer validation
 	uint32_t timer_link_1sec = millis();
 	// w5500.h popis pre urcenie TCP/UDP
-	int8_t socket_number = socket(5,Sn_MR_UDP,42000,0x00);
+	/*int8_t socket_number = socket(5,Sn_MR_UDP,42000,0x00);
 	if (socket_number == 5){
 		printf("Socket number is correct\n\r");
 	}
 	else{
 		printf("Socket number is incorrect\n\r");
-	}
-	//mqtt_pub(&mqtt_client, PUBLISH_TEPLOTA_0, 'a', 1);
+	}*/
+	mqtt_pub(&mqtt_client, PUBLISH_TEPLOTA_0, "AhojAhojCotTy", 14);
 	//sendto(socket_number,test,sizeof(test),ping_ip,42000);
 	while(1)
 	{	
@@ -403,14 +403,14 @@ int main()
 // 		}
 		static char _msg[64] = "\0";
 		static int _len;
-//  		if(data_ready){
-//  			_len = sprintf(_msg, "%u",buffer);
-//  			if(_len > 0)
-//  			{
-//  				mqtt_pub(&mqtt_client, PUBLISH_TEPLOTA_0, _msg, _len);
-//  			}
-//  			data_ready = 0;
-//  		}
+  		if(data_ready){
+  			_len = sprintf(_msg, "%u",buffer);
+  			if(_len > 0)
+  			{
+  				mqtt_pub(&mqtt_client, PUBLISH_TEPLOTA_0, _msg, _len);
+  			}
+  			data_ready = 0;
+  		}
 		
 
 		// MQTT broker connection and sub receive
