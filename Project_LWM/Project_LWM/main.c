@@ -139,7 +139,7 @@ void mqtt_pub(Client* mqtt_client, char * mqtt_topic, char * mqtt_msg, int mqtt_
 	static uint8_t mqtt_err_cnt = 0;
 	int32_t mqtt_rc;
 
-	wdt_reset();
+	//wdt_reset();
 	//wdt_disable();
 	PRINTF(">>MQTT pub msg %lu ", ++mqtt_pub_count);
 	MQTTMessage pubMessage;
@@ -323,7 +323,7 @@ int main()
 		_delay_ms(100);
 		LED0OFF;
 		_delay_ms(400);
-		wdt_reset();
+		//wdt_reset();
 	}
 
 	//Wizchip WIZ5500 Ethernet initialize
@@ -370,6 +370,7 @@ int main()
 	PRINTF("Subscribed (%s) %d\r\n", SubString, mqtt_rc);
 
 	uint32_t timer_mqtt_pub_1sec = millis();
+	uint32_t timer_mqtt_pub = millis();
 	/* Loopback Test: TCP Server and UDP */
 	// Test for Ethernet data transfer validation
 	uint32_t timer_link_1sec = millis();
@@ -389,7 +390,7 @@ int main()
 		HAL_UartTaskHandler();
 		APP_TaskHandler();
 		//Here at least every 1sec
-		wdt_reset(); // WDT reset at least every sec
+		//wdt_reset(); // WDT reset at least every sec
 
 		//Use Hercules Terminal to check loopback tcp:5000 and udp:3000
 		/*
@@ -415,9 +416,18 @@ int main()
  		if((millis()-timer_mqtt_pub_1sec)> 5000)
  		{
 			timer_mqtt_pub_1sec = millis();
-			MQTTYield(&mqtt_client, 100);
-			wdt_reset();
+			MQTTYield(&mqtt_client, 10);
+			PRINTF("CAU");
+			//wdt_reset();
  		}
+// 		if((millis()-timer_mqtt_pub)> 1000)
+// 		{
+// 			timer_mqtt_pub=millis();
+// 			//mqtt_pub(&mqtt_client, PUBLISH_TEPLOTA_0, "Ahoj\r\n", 6);
+// 			PRINTF("CAU");
+// 		}
+		
+		
 		// MQTT broker connection and sub receive
 		//MQTTYield(&mqtt_client, 100);//~100msec blocking here
 
@@ -498,8 +508,8 @@ static void avr_init(void)
 {
 	// Initialize device here.
 	// WatchDog INIT
-	wdt_enable(WDTO_8S);  // set up wdt reset interval 2 second
-	wdt_reset(); // wdt reset ~ every <2000ms
+	//wdt_enable(WDTO_8S);  // set up wdt reset interval 2 second
+	//wdt_reset(); // wdt reset ~ every <2000ms
 
 	timer0_init();// Timer0 millis engine init
 
