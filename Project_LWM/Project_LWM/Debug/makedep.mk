@@ -36,6 +36,14 @@ Internet\MQTT\MQTTPacket\src\MQTTUnsubscribeServer.c
 
 Internet\MQTT\mqtt_interface.c
 
+json\json_decoder.c
+
+json\lexer.c
+
+json\mem_model.c
+
+json\parser.c
+
 lwm\lwm.c
 
 main.c

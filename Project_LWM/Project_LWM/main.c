@@ -23,25 +23,11 @@
 #include "lwm/lwm.h"
 #include "mqtt_interface.h"
 #include "MQTTClient.h"
+#include "json_decoder.h"
 
 
-/*
- *
- * (8) ICMP PING Client-Server unblocking via IPRAW mode
- *
- * (3) Trying WIZNET5500 init with using official Wiznet ioLibrary_Driver
- * working ping on static IP
- * LED1 = ON when phy_link detected
- * and loopback test on TCP-IP:5000 and UDP:3000 ports.
- * use Hercules terminal utility to check network connection see:
- *
- * https://wizwiki.net/wiki/doku.php?id=osh:cookie:loopback_test
- * https://www.hw-group.com/software/hercules-setup-utility
- *
- */
-extern uint8_t buffer[30] = {0};
-extern uint8_t data_ready = 0;
 
+// PRINTF redefined
 #define PRINTF_EN 1
 #if PRINTF_EN
 #define PRINTF(FORMAT,args...) printf_P(PSTR(FORMAT),##args)
@@ -50,17 +36,7 @@ extern uint8_t data_ready = 0;
 #endif
 
 
-#ifdef IP_WORK
-uint8_t mqtt_target[4] = {34, 249, 184, 60}; //mqtt IP address
-uint8_t ping_ip[4] = { 192, 168, 53, 109 };
-//NIC metrics for WORK PC
-wiz_NetInfo netInfo = { .mac  = {0x00, 0x08, 0xdc, 0xab, 0xcd, 0xef}, // Mac address
-.ip   = {192, 168, 53, 199},         // IP address
-.sn   = {255, 255, 255, 0},         // Subnet mask
-.dns =  {8,8,8,8},			  // DNS address (google dns)
-.gw   = {192, 168, 53, 1}, // Gateway address
-.dhcp = NETINFO_STATIC};    //Static IP configuration
-#else
+// NET INFO
 uint8_t mqtt_target[4] = {34, 249, 184, 60}; //mqtt IP address
 uint8_t ping_ip[4] = { 192, 168, 53, 109 };
 //NIC metrics for another PC (second IP configuration)
@@ -70,22 +46,6 @@ wiz_NetInfo netInfo = { .mac  = {0x00, 0x08, 0xdc, 0xab, 0xcd, 0xef}, // Mac add
 .dns =  {8,8,8,8},			  // DNS address (google dns)
 .gw   = {192, 168, 53, 1}, // Gateway address
 .dhcp = NETINFO_STATIC};    //Static IP configuration
-#endif
-/*
- * m1284p minimum template, with one button & one led
- */
-
-//M644P/M1284p Users LEDS:
-//LED1/PORTC.4- m644p/m1284p maxxir
-//#define led1_conf()      DDRC |= (1<<DDC4)
-//#define led1_high()      PORTC |= (1<<PORTC4)
-//#define led1_low()       PORTC &= ~(1<<PORTC4)
-//#define led1_tgl()     PORTC ^= (1<<PORTC4)
-//#define led1_read()     (PORTC & (1<<PORTC4))
-//
-//#define sw1_conf()      {DDRC &= ~(1<<DDC5); PORTC |= (1<<PORTC5);}
-//#define sw1_read()     (PINC & (1<<PINC5))
-
 
 
 //***********Prologue for fast WDT disable & and save reason of reset/power-up: BEGIN
@@ -103,10 +63,16 @@ void get_mcusr(void)
 }
 //***********Prologue for fast WDT disable & and save reason of reset/power-up: END
 
+
 //*********Global vars
 #define TICK_PER_SEC 1000UL
 volatile unsigned long _millis; // for millis tick !! Overflow every ~49.7 days
-
+extern uint8_t buffer[30] = {0};
+extern uint8_t data_ready = 0;
+char json_buffer[100] = {0};
+uint8_t json_config_ready = 0;
+uint16_t mqtt_timer = 5000;
+int vypis_cau = 0;
 
 
 //******************* MQTT: BEGIN
@@ -116,10 +82,9 @@ volatile unsigned long _millis; // for millis tick !! Overflow every ~49.7 days
 uint8_t mqtt_readBuffer[MQTT_BUFFER_SIZE];
 volatile uint16_t mes_id;
 
-//#define PUBLISH_ANALOG_0         "sta/analog/0"
+#define PUBLISH_CONFIG_0         "/ssy/test/config"
 #define PUBLISH_TEPLOTA_0         "/ssy/test/teplota"
 //#define PUBLISH_AVR_DEBUG         "/w5500_avr_dbg"
-
 //MQTT subscribe call-back is here
 void messageArrived(MessageData* md)
 {
@@ -127,9 +92,16 @@ void messageArrived(MessageData* md)
 	char _message[128] = "\0";
 
 	MQTTMessage* message = md->message;
+	
 	MQTTString* topic = md->topicName;
 	strncpy(_topic_name, topic->lenstring.data, topic->lenstring.len);
 	strncpy(_message, message->payload, message->payloadlen);
+	
+	if(!strcmp(_topic_name,"/ssy/test/config")){
+		json_config_ready = 1;
+		strncpy(json_buffer, message->payload, message->payloadlen);
+
+	}
 	PRINTF("<<MQTT Sub: [%s] %s", _topic_name , _message);
 }
 
@@ -139,7 +111,7 @@ void mqtt_pub(Client* mqtt_client, char * mqtt_topic, char * mqtt_msg, int mqtt_
 	static uint8_t mqtt_err_cnt = 0;
 	int32_t mqtt_rc;
 
-	//wdt_reset();
+	wdt_reset();
 	//wdt_disable();
 	PRINTF(">>MQTT pub msg %lu ", ++mqtt_pub_count);
 	MQTTMessage pubMessage;
@@ -171,6 +143,7 @@ void mqtt_pub(Client* mqtt_client, char * mqtt_topic, char * mqtt_msg, int mqtt_
 static void avr_init(void);
 void timer0_init(void);
 unsigned long millis(void);
+void executeCommand(char *command);
 
 //Wiznet FUNC headers
 void print_network_information(void);
@@ -186,7 +159,6 @@ static int freeRam (void)
 
 
 //******************* MILLIS ENGINE: BEGIN
-//ISR (TIMER0_COMP_vect )
 ISR (TIMER0_COMPA_vect)
 {
 	// Compare match Timer0
@@ -205,21 +177,41 @@ unsigned long millis(void)
 }
 //******************* MILLIS ENGINE: END
 
-//***************** UART0: BEGIN
-// Assign I/O stream to UART
-/* define CPU frequency in Mhz here if not defined in Makefile */
-//#ifndef F_CPU
-//#define F_CPU 16000000UL
-//#endif
-
-/* 19200 baud */
-//#define UART_BAUD_RATE      19200
+//***************** UART: BEGIN
 #define UART_BAUD_RATE      38400
-
-
 FILE uart_str = FDEV_SETUP_STREAM(printCHAR, NULL, _FDEV_SETUP_RW);
+//***************** UART: END
 
 
+//***************** JSON: BEGIN
+void executeCommand(char *command)
+{
+	jsonNode_t *root = 0;
+	jsonDecoderStatus_t ret;
+	char state[5];
+	int cislo_timer;
+	int cislo_vypis;
+
+	ret = JSON_DECODER_fromString(command);
+	if(JSON_DECODER_OK != ret)
+	{
+		printf("Invalid JSON string.\r\n");
+	}
+
+	JSON_DECODER_getRoot(&root);
+
+	ret = JSON_DECODER_getNumber(root, "mqtt_timer", &cislo_timer);
+	if(JSON_DECODER_OK == ret)
+	{
+		mqtt_timer = cislo_timer;
+	}
+
+	ret = JSON_DECODER_getNumber(root, "vypis_cau", &cislo_vypis);
+	if(JSON_DECODER_OK == ret)
+	{
+		vypis_cau = cislo_vypis;
+	}
+}//***************** JSON: END
 
 //***************** WIZCHIP INIT: BEGIN
 //#define ETH_MAX_BUF_SIZE	2048
@@ -271,48 +263,13 @@ void IO_LIBRARY_Init(void) {
 }
 //***************** WIZCHIP INIT: END
 
-
-//ICMP callback (fire on ICMP request/reply from ping_srv)
-/*
- * socket - socket number
- * ip_query - IP from which ICMP query (like 192.168.0.x)
- * type_query - ICMP query type: PING_REQUEST or PING_REPLY
- * id_query - ICMP query Identificator: ID ICMP [0..0xFFFF]
- * seq_query - ICMP query Sequence Number : ID Seq num [0..0xFFFF]
- * len_query - ICMP query length of the data
- */
-/*void icmp_cb(uint8_t socket,\
-		uint8_t* ip_query,\
-		uint8_t type_query,\
-		uint16_t id_query,\
-		uint16_t seq_query,\
-		uint16_t len_query)
-{
-	PRINTF( "<< PING %s from %d.%d.%d.%d ID:%x Seq:%x data:%u bytes\r\n",\
-			type_query? "Request": "Reply",\
-			(int16_t) ip_query[0],\
-			(int16_t) ip_query[1],\
-			(int16_t) ip_query[2],\
-			(int16_t) ip_query[3],\
-			id_query,\
-			seq_query,\
-			len_query);
-}*/
-
 int main()
 {
 	
-	//uint8_t prev_sw1 = 1; // VAR for sw1 pressing detect
 	SYS_Init();
 	// INIT MCU
 	avr_init();
 	spi_init(); //SPI Master, MODE0, 4Mhz(DIV4), CS_PB.3=HIGH - suitable for WIZNET 5x00(1/2/5)
-	
-
-	// Print program metrics
-	//PRINTF("%S", str_prog_name);// ???????? ?????????
-	//PRINTF("Compiled at: %S %S\r\n", compile_time, compile_date);// ????? ???? ??????????
-	//PRINTF(">> MCU is: %S; CLK is: %luHz\r\n", str_mcu, F_CPU);// MCU Name && FREQ
 	PRINTF(">> Free RAM is: %d bytes\r\n", freeRam());
 
 	//Short Blink LED 3 times on startup
@@ -323,7 +280,7 @@ int main()
 		_delay_ms(100);
 		LED0OFF;
 		_delay_ms(400);
-		//wdt_reset();
+		wdt_reset();
 	}
 
 	//Wizchip WIZ5500 Ethernet initialize
@@ -365,43 +322,23 @@ int main()
 	}
 	
 	// Subscribe to all topics
-	char SubString[] = "/ssy/test/teplota";// Subscribe for all that begin from "/"
+	char SubString[] = "/ssy/test/#";// Subscribe for all that begin from "/"
 	mqtt_rc = MQTTSubscribe(&mqtt_client, SubString, QOS0, messageArrived);
 	PRINTF("Subscribed (%s) %d\r\n", SubString, mqtt_rc);
-
+	// timers defined
 	uint32_t timer_mqtt_pub_1sec = millis();
-	uint32_t timer_mqtt_pub = millis();
-	/* Loopback Test: TCP Server and UDP */
-	// Test for Ethernet data transfer validation
 	uint32_t timer_link_1sec = millis();
-	// w5500.h popis pre urcenie TCP/UDP
-	/*int8_t socket_number = socket(5,Sn_MR_UDP,42000,0x00);
-	if (socket_number == 5){
-		printf("Socket number is correct\n\r");
-	}
-	else{
-		printf("Socket number is incorrect\n\r");
-	}*/
-	mqtt_pub(&mqtt_client, PUBLISH_TEPLOTA_0, "AhojAhojCoTy\r\n", 15);
-	//sendto(socket_number,test,sizeof(test),ping_ip,42000);
 	while(1)
 	{	
 		SYS_TaskHandler();
 		HAL_UartTaskHandler();
 		APP_TaskHandler();
-		//Here at least every 1sec
-		//wdt_reset(); // WDT reset at least every sec
-
-		//Use Hercules Terminal to check loopback tcp:5000 and udp:3000
-		/*
-		 * https://www.hw-group.com/software/hercules-setup-utility
-		 * */
-		//loopback_tcps(0,ethBuf0,5000);
-		//loopback_udps(1, ethBuf0, 3000);
-// 		if(data_ready){
-// 			sendto(socket_number,buffer,sizeof(buffer),ping_ip,42000);
-// 			data_ready = 1;
-// 		}
+		// json config
+		if(json_config_ready){
+			executeCommand(json_buffer);
+			json_config_ready = 0;
+		}
+		// mqtt publish when LWM msg sent
 		static char _msg[64] = "\0";
 		static int _len;
   		if(data_ready){
@@ -411,56 +348,18 @@ int main()
   			mqtt_pub(&mqtt_client, PUBLISH_TEPLOTA_0,_msg,_len );
   			}
   			data_ready = 0;
+			if(vypis_cau){
+				PRINTF("CAAAAU\n\r");
+			}
   		}
-		
- 		if((millis()-timer_mqtt_pub_1sec)> 5000)
+		// receive subs every mqtt_timer period ( MQTT yield )
+ 		if((millis()-timer_mqtt_pub_1sec)> mqtt_timer)
  		{
 			timer_mqtt_pub_1sec = millis();
 			MQTTYield(&mqtt_client, 10);
-			PRINTF("CAU");
-			//wdt_reset();
+			
  		}
-// 		if((millis()-timer_mqtt_pub)> 1000)
-// 		{
-// 			timer_mqtt_pub=millis();
-// 			//mqtt_pub(&mqtt_client, PUBLISH_TEPLOTA_0, "Ahoj\r\n", 6);
-// 			PRINTF("CAU");
-// 		}
-		
-		
-		// MQTT broker connection and sub receive
-		//MQTTYield(&mqtt_client, 100);//~100msec blocking here
-
-		//sendto(socket_number,buffer,sizeof(buffer),ping_ip,42000);
-		/*
-		 * run ICMP (ping) server
-		 */
-// 		ping_srv(2);
-// 
-// 		/*ICM Ping client example #1 - ping GW/myPC every 10 sec*/
-// 		if((millis()-timer_ping1)> 10000)
-// 		{
-// 			timer_ping1 = millis();
-// 			//PRINTF("\r\n>> PING GW\r\n");
-// 			//ping_request(2, netInfo.gw);
-// 
-// 			
-// 			sendto(socket_number,buffer,sizeof(buffer),ping_ip,42000);
-// 
-// 			PRINTF("\r\n>> sending data\r\n");
-// 		}
-// 
-// 		/*ICM Ping client example #2 - ping DNS google  every 15 sec*/
-// 		if((millis()-timer_ping2)> 15000)
-// 		{
-// 			timer_ping2 = millis();
-// 			PRINTF("\r\n>>> PING DNS\r\n");
-// 			ping_request(2, netInfo.dns);
-// 		}
-// 
-// 		//loopback_ret = loopback_tcpc(SOCK_TCPS, gDATABUF, destip, destport);
-// 		//if(loopback_ret < 0) printf("loopback ret: %ld\r\n", loopback_ret); // TCP Socket Error code
-
+		// LINK check
 		if((millis()-timer_link_1sec)> 1000)
 		{
 			//here every 1 sec
@@ -508,8 +407,8 @@ static void avr_init(void)
 {
 	// Initialize device here.
 	// WatchDog INIT
-	//wdt_enable(WDTO_8S);  // set up wdt reset interval 2 second
-	//wdt_reset(); // wdt reset ~ every <2000ms
+	wdt_enable(WDTO_8S);  // set up wdt reset interval 2 second
+	wdt_reset(); // wdt reset ~ every <2000ms
 
 	timer0_init();// Timer0 millis engine init
 

@@ -244,7 +244,7 @@ int32_t cycle(Client* c, Timer* timer)
         if (MQTTDeserialize_publish((uint8_t*)&msg.dup, (uint8_t*)&msg.qos, (uint8_t*)&msg.retained, (uint16_t*)&msg.id, &topicName,
                (uint8_t**)&msg.payload, (int32_t*)&msg.payloadlen, c->readbuf, c->readbuf_size) != 1)
           goto exit;
-          
+        asm("nop");
         deliverMessage(c, &topicName, &msg);
       
         if (msg.qos != QOS0)
@@ -291,7 +291,8 @@ int32_t cycle(Client* c, Timer* timer)
 exit:
   if (rc == SUCCESSS)
     rc = packet_type;
-  
+  if (rc == 65535)
+	rc = FAILURE;
   return rc;
 }
 
@@ -302,7 +303,7 @@ int32_t MQTTYield(Client* c, int32_t timeout_ms)
 
   InitTimer(&timer);    
   countdown_ms(&timer, timeout_ms);
-    
+  
   while (!expired(&timer))
   {
     if (cycle(c, &timer) == FAILURE)

@@ -52,7 +52,8 @@ main.d main.o: .././main.c \
  ../Internet/MQTT/MQTTPacket/src/MQTTFormat.h \
  ../Internet/MQTT/MQTTPacket/src/StackTrace.h \
  ../Internet/MQTT/MQTTPacket/src/MQTTPacket.h \
- ../Internet/MQTT/mqtt_interface.h
+ ../Internet/MQTT/mqtt_interface.h ../json/json_decoder.h \
+ ../json/mem_model.h
 
 c:\apps\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\avr\io.h:
 
@@ -193,3 +194,7 @@ c:\apps\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\gcc\avr\5.4.0\inc
 ../Internet/MQTT/MQTTPacket/src/MQTTPacket.h:
 
 ../Internet/MQTT/mqtt_interface.h:
+
+../json/json_decoder.h:
+
+../json/mem_model.h:

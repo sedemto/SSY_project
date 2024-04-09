@@ -15,8 +15,8 @@ void MilliTimer_Handler(void)
 
 int8_t expired(Timer* timer)
 {
-  int32_t left = (timer->end_time) - millis();
-  return (left < 0);
+	int32_t left = (timer->end_time) - millis();
+	return (left < 0);
 }
 
 void countdown_ms(Timer* timer, uint32_t timeout)
