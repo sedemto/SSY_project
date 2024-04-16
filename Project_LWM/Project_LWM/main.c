@@ -67,9 +67,13 @@ void get_mcusr(void)
 //*********Global vars
 #define TICK_PER_SEC 1000UL
 volatile unsigned long _millis; // for millis tick !! Overflow every ~49.7 days
-extern uint8_t buffer[30] = {0};
+uint16_t buffer_data;
+uint8_t buffer_mask;
+uint16_t clusterID;
 extern uint8_t data_ready = 0;
 char json_buffer[100] = {0};
+char final_json[100] = "\0";
+int len_json = 0;
 uint8_t json_config_ready = 0;
 uint16_t mqtt_timer = 5000;
 int vypis_cau = 0;
@@ -119,6 +123,8 @@ void mqtt_pub(Client* mqtt_client, char * mqtt_topic, char * mqtt_msg, int mqtt_
 	pubMessage.id = mes_id++;
 	pubMessage.payloadlen = (size_t)mqtt_msg_len;
 	pubMessage.payload = mqtt_msg;
+	
+	
 	mqtt_rc = MQTTPublish(mqtt_client, mqtt_topic , &pubMessage);
 	//Analize MQTT publish result (for MQTT failover mode)
 	if (mqtt_rc == SUCCESSS)
@@ -184,6 +190,13 @@ FILE uart_str = FDEV_SETUP_STREAM(printCHAR, NULL, _FDEV_SETUP_RW);
 
 
 //***************** JSON: BEGIN
+// define sensors
+char *meteorologicke[50] = {"Teplota", "Tlak", "Vlhkost vzduchu","Osvetlenie","CO2 - kvalita ovzdusi","Slunecni zareni","Prutok vzduchu","Hluk"};
+char *analog2[50] = {"Akcelerometer_x", "Akcelerometer_y", "Akcelerometer","Naklon_x","Naklon_y","Naklon_z","Rychlost pohybu","Rezerva"};
+char *zdravotni[50] = {"Tep", "Okyslyceni krve", "Tlak H","Tlak L","Teplota","Glukoza","Dechova frekvence","Rezerva"};
+char *analog_2[50] = {"PH", "Vyska hladiny", "Prietok kapaliny","Vlhkost pudy","Hustota","Koncentrace chloru","Vibrace","Rezerva"};
+	
+
 void executeCommand(char *command)
 {
 	jsonNode_t *root = 0;
@@ -211,7 +224,13 @@ void executeCommand(char *command)
 	{
 		vypis_cau = cislo_vypis;
 	}
-}//***************** JSON: END
+}static void create_json(){	wdt_reset();	final_json[100] = "\0";	char* json_string = "\0";	switch(clusterID){		case 1:			json_string = meteorologicke[(uint8_t)sqrt(buffer_mask)];			break;		case 2:			json_string = analog2[(uint8_t)sqrt(buffer_mask)];			break;		case 3:			json_string = zdravotni[(uint8_t)sqrt(buffer_mask)];			break;		case 4:			json_string = analog_2[(uint8_t)sqrt(buffer_mask)];			break;		case 5:			json_string = meteorologicke[(uint8_t)sqrt(buffer_mask)];			break;		case 7:			json_string = meteorologicke[(uint8_t)sqrt(buffer_mask)];			break;		case 129:			json_string = meteorologicke[(uint8_t)sqrt(buffer_mask)];			break;		case 130:			json_string = meteorologicke[(uint8_t)sqrt(buffer_mask)];			break;		case 131:			json_string = meteorologicke[(uint8_t)sqrt(buffer_mask)];			break;		case 0:			printf("som tuuuuu");			json_string = meteorologicke[(uint8_t)sqrt(buffer_mask)];			break;	}	len_json = sprintf(final_json, "{\"%s\":%d}",json_string,buffer_data);		}//***************** JSON: END
+
+	
+
+
+
+
 
 //***************** WIZCHIP INIT: BEGIN
 //#define ETH_MAX_BUF_SIZE	2048
@@ -328,25 +347,25 @@ int main()
 	// timers defined
 	uint32_t timer_mqtt_pub_1sec = millis();
 	uint32_t timer_link_1sec = millis();
+	uint32_t timer_rstWDtimer  = millis();
 	while(1)
 	{	
 		SYS_TaskHandler();
 		HAL_UartTaskHandler();
 		APP_TaskHandler();
+		wdt_reset();
 		// json config
 		if(json_config_ready){
 			executeCommand(json_buffer);
 			json_config_ready = 0;
 		}
 		// mqtt publish when LWM msg sent
-		static char _msg[64] = "\0";
-		static int _len;
+		//static char _msg[100] = "\0";
+		//static int _len;
   		if(data_ready){
-  			_len = sprintf(_msg, "%s",buffer);
-   			if(_len > 0)
-   			{
-  			mqtt_pub(&mqtt_client, PUBLISH_TEPLOTA_0,_msg,_len );
-  			}
+  			//_len = sprintf(_msg, "%d",clusterID);
+			create_json();
+  			mqtt_pub(&mqtt_client, PUBLISH_TEPLOTA_0,final_json,len_json );
   			data_ready = 0;
 			if(vypis_cau){
 				PRINTF("CAAAAU\n\r");
@@ -356,7 +375,8 @@ int main()
  		if((millis()-timer_mqtt_pub_1sec)> mqtt_timer)
  		{
 			timer_mqtt_pub_1sec = millis();
-			MQTTYield(&mqtt_client, 10);
+			wdt_reset();
+			MQTTYield(&mqtt_client, 100);
 			
  		}
 		// LINK check

@@ -26,8 +26,41 @@ static bool appDataReqBusy = false;
 static uint8_t appDataReqBuffer[APP_BUFFER_SIZE];
 static uint8_t appUartBuffer[APP_BUFFER_SIZE];
 static uint8_t appUartBufferPtr = 0;
-extern uint8_t buffer[30];
+extern uint16_t buffer_data;
+extern uint8_t buffer_mask;
+extern uint16_t clusterID;
 extern uint8_t data_ready;
+
+
+typedef struct PACK
+{
+	uint8_t      commandId;
+	uint8_t      nodeType;
+	uint64_t     extAddr;
+	uint16_t     shortAddr;
+	uint32_t     softVersion;
+	uint32_t     channelMask;
+	uint8_t      workingChannel;
+	uint16_t      panId;
+	uint16_t    parentShortAddr;
+	uint8_t      lqi;
+	int8_t       rssi;
+
+	struct PACK
+	{
+		uint8_t    maska;
+		int16_t    data;
+	} sensors;
+
+} AppMessage_t;
+
+typedef struct PACK
+{
+	uint8_t msg_ID;
+	uint16_t node_address;
+	uint16_t node_ID;
+	uint16_t clusterID;
+}AppAddress_t;
 
 void sendOK(int16_t odesilatel){
 	if (appDataReqBusy)
@@ -75,13 +108,14 @@ void appTimerHandler(SYS_Timer_t *timer){
 	(void)timer;
 }
 bool appDataInd(NWK_DataInd_t *ind){
-	//char* temp;
-	for (uint8_t i = 0; i < ind->size; i++){
-		//printf("%c",ind->data[i]);
-		buffer[i] = ind->data[i];
-		
-	}
-	//printf(temp);
+	AppMessage_t *msg = (AppMessage_t *)ind->data;
+	//not whole message, but payload only
+
+	msg->lqi = ind->lqi;
+	msg->rssi = ind->rssi;
+	buffer_data = msg->sensors.data;
+	buffer_mask = msg->sensors.maska;
+
 	sendOK(ind->srcAddr);
 	data_ready = 1;
 	return true;
@@ -94,6 +128,12 @@ bool appDataInd_ACK(NWK_DataInd_t *ind)
 	return true;
 }
 
+static bool appAddrInd(NWK_DataInd_t *ind)
+{
+	printf("Address message \n\r");
+	AppAddress_t *addr_msg = (AppAddress_t *)ind->data;
+	clusterID = addr_msg->clusterID>>8;
+}
 void appInit(void){
 	NWK_SetAddr(APP_ADDR);
 	NWK_SetPanId(APP_PANID);
@@ -105,7 +145,7 @@ void appInit(void){
 	PHY_SetRxState(true);
 
 	NWK_OpenEndpoint(APP_ENDPOINT, appDataInd);
-	NWK_OpenEndpoint(APP_ENDPOINT_ACK, appDataInd_ACK);
+	NWK_OpenEndpoint(APP_ENDPOINT_ACK, appAddrInd);
 
 	HAL_BoardInit();
 
