@@ -2168,7 +2168,7 @@ END GROUP
  .debug_abbrev  0x000049f0      0x19b stack/sys/src/sysTimer.o
  .debug_abbrev  0x00004b8b      0x155 uart/uart.o
 
-.debug_line     0x00000000     0x70d0
+.debug_line     0x00000000     0x70d1
  *(.debug_line .debug_line.* .debug_line_end)
  .debug_line    0x00000000      0x272 C:/Apps/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.7.374/gcc/dev/atmega256rfr2/avr6/crtatmega256rfr2.o
  .debug_line    0x00000272      0xb7d Ethernet/socket.o
@@ -2186,22 +2186,22 @@ END GROUP
  .debug_line    0x000038dc       0xdd json/mem_model.o
  .debug_line    0x000039b9      0x24a json/parser.o
  .debug_line    0x00003c03      0x335 lwm/lwm.o
- .debug_line    0x00003f38      0x98e main.o
- .debug_line    0x000048c6       0xb7 spi/spi.o
- .debug_line    0x0000497d      0x167 stack/hal/atmega256rfr2/src/hal.o
- .debug_line    0x00004ae4      0x11e stack/hal/atmega256rfr2/src/halTimer.o
- .debug_line    0x00004c02      0x1a8 stack/hal/drivers/atmega256rfr2/src/halSleep.o
- .debug_line    0x00004daa      0x2b5 stack/hal/drivers/atmega256rfr2/src/halUart.o
- .debug_line    0x0000505f      0x2c6 stack/nwk/src/nwk.o
- .debug_line    0x00005325      0x293 stack/nwk/src/nwkDataReq.o
- .debug_line    0x000055b8      0x1e6 stack/nwk/src/nwkFrame.o
- .debug_line    0x0000579e      0x52d stack/nwk/src/nwkRoute.o
- .debug_line    0x00005ccb      0x65f stack/nwk/src/nwkRx.o
- .debug_line    0x0000632a      0x490 stack/nwk/src/nwkTx.o
- .debug_line    0x000067ba      0x3cf stack/phy/atmega256rfr2/src/phy.o
- .debug_line    0x00006b89      0x108 stack/sys/src/sys.o
- .debug_line    0x00006c91      0x2e7 stack/sys/src/sysTimer.o
- .debug_line    0x00006f78      0x158 uart/uart.o
+ .debug_line    0x00003f38      0x98f main.o
+ .debug_line    0x000048c7       0xb7 spi/spi.o
+ .debug_line    0x0000497e      0x167 stack/hal/atmega256rfr2/src/hal.o
+ .debug_line    0x00004ae5      0x11e stack/hal/atmega256rfr2/src/halTimer.o
+ .debug_line    0x00004c03      0x1a8 stack/hal/drivers/atmega256rfr2/src/halSleep.o
+ .debug_line    0x00004dab      0x2b5 stack/hal/drivers/atmega256rfr2/src/halUart.o
+ .debug_line    0x00005060      0x2c6 stack/nwk/src/nwk.o
+ .debug_line    0x00005326      0x293 stack/nwk/src/nwkDataReq.o
+ .debug_line    0x000055b9      0x1e6 stack/nwk/src/nwkFrame.o
+ .debug_line    0x0000579f      0x52d stack/nwk/src/nwkRoute.o
+ .debug_line    0x00005ccc      0x65f stack/nwk/src/nwkRx.o
+ .debug_line    0x0000632b      0x490 stack/nwk/src/nwkTx.o
+ .debug_line    0x000067bb      0x3cf stack/phy/atmega256rfr2/src/phy.o
+ .debug_line    0x00006b8a      0x108 stack/sys/src/sys.o
+ .debug_line    0x00006c92      0x2e7 stack/sys/src/sysTimer.o
+ .debug_line    0x00006f79      0x158 uart/uart.o
 
 .debug_frame    0x00000000     0x2828
  *(.debug_frame)

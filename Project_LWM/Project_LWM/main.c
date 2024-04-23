@@ -37,17 +37,35 @@
 #endif
 
 
-// NET INFO
-uint8_t mqtt_target[4] = {34, 249, 184, 60}; //mqtt IP address
-//uint8_t ping_ip[4] = { 192, 168, 53, 109 };	
-//NIC metrics for another PC (second IP configuration)
+// ****************CONFIG START
+#define CLIENT "w5500_avr_client"
+#define USER "user1234"
+#define PASSWORD "\0"
+#define PUBLISH_CONFIG_0 "/ssy/test/config"
+#define SUBSCRIBE_TOPIC "/ssy/test/#"
+#define PUBLISH_TOPIC "/ssy/test/%s"
 
+uint8_t mqtt_target[4] = {34, 249, 184, 60};//mqtt IP address
 wiz_NetInfo netInfo = { .mac  = {0x00, 0x08, 0xdc, 0xab, 0xcd, 0xef}, // Mac address
 .ip   = {192, 168, 53, 199},         // IP address
 .sn   = {255, 255, 255, 0},         // Subnet mask
 .dns =  {8,8,8,8},			  // DNS address (google dns)
 .gw   = {192, 168, 53, 1}, // Gateway address
 .dhcp = NETINFO_STATIC};    //Static IP configuration
+
+
+// define sensors
+char *meteorologicke[50] = {"Teplota", "Tlak", "Vlhkost vzduchu","Osvetlenie","CO2 - kvalita ovzdusi","Slunecni zareni","Prutok vzduchu","Hluk"};
+char *analog2[50] = {"Akcelerometer_x", "Akcelerometer_y", "Akcelerometer","Naklon_x","Naklon_y","Naklon_z","Rychlost pohybu","Rezerva"};
+char *zdravotni[50] = {"Tep", "Okyslyceni krve", "Tlak H","Tlak L","Teplota","Glukoza","Dechova frekvence","Rezerva"};
+char *analog_2[50] = {"PH", "Vyska hladiny", "Prietok kapaliny","Vlhkost pudy","Hustota","Koncentrace chloru","Vibrace","Rezerva"};
+char pasive[8][50] = {"Odpor", "Indukcnost", "Kapacita", "PN", "Impedancia", "Rez freq", "Tau", "Faktor kvality"};
+char active[8][50] = {"Napatie", "Proud", "Freq", "Vykon", "Strida", "Ucinnik", "Fazovy posun", "Rezerva"};
+char analog3[8][50] = {"Vzdialenost", "Mag pole", "Ionizacni zareni", "Koncetrace CO %", "Barva R", "Barva G", "Barva B", "Rezerva"};
+char digital1[8][50] = {"Pritomnost osob", "Detekcia pohybu", "Mag kontakt", "Pritomnost alko", "Detekcia ohna", "Detekcia koure", "Priblizenie", "Zaplaveni"};
+
+
+// ****************CONFIG END
 
 
 //***********Prologue for fast WDT disable & and save reason of reset/power-up: BEGIN
@@ -94,9 +112,8 @@ json_info info;
 uint8_t mqtt_readBuffer[MQTT_BUFFER_SIZE];
 volatile uint16_t mes_id;
 
-#define PUBLISH_CONFIG_0         "/ssy/test/config"
-#define PUBLISH_TEPLOTA_0         "/ssy/test/teplota"
-//#define PUBLISH_AVR_DEBUG         "/w5500_avr_dbg"
+
+
 //MQTT subscribe call-back is here
 void messageArrived(MessageData* md)
 {
@@ -109,7 +126,7 @@ void messageArrived(MessageData* md)
 	strncpy(_topic_name, topic->lenstring.data, topic->lenstring.len);
 	strncpy(_message, message->payload, message->payloadlen);
 	
-	if(!strcmp(_topic_name,"/ssy/test/config")){
+	if(!strcmp(_topic_name,PUBLISH_CONFIG_0)){
 		json_config_ready = 1;
 		strncpy(json_buffer, message->payload, message->payloadlen);
 
@@ -199,15 +216,7 @@ FILE uart_str = FDEV_SETUP_STREAM(printCHAR, NULL, _FDEV_SETUP_RW);
 
 
 //***************** JSON: BEGIN
-// define sensors
-char *meteorologicke[50] = {"Teplota", "Tlak", "Vlhkost vzduchu","Osvetlenie","CO2 - kvalita ovzdusi","Slunecni zareni","Prutok vzduchu","Hluk"};
-char *analog2[50] = {"Akcelerometer_x", "Akcelerometer_y", "Akcelerometer","Naklon_x","Naklon_y","Naklon_z","Rychlost pohybu","Rezerva"};
-char *zdravotni[50] = {"Tep", "Okyslyceni krve", "Tlak H","Tlak L","Teplota","Glukoza","Dechova frekvence","Rezerva"};
-char *analog_2[50] = {"PH", "Vyska hladiny", "Prietok kapaliny","Vlhkost pudy","Hustota","Koncentrace chloru","Vibrace","Rezerva"};
-char pasive[8][50] = {"Odpor", "Indukcnost", "Kapacita", "PN", "Impedancia", "Rez freq", "Tau", "Faktor kvality"};
-char active[8][50] = {"Napatie", "Proud", "Freq", "Vykon", "Strida", "Ucinnik", "Fazovy posun", "Rezerva"};
-char analog3[8][50] = {"Vzdialenost", "Mag pole", "Ionizacni zareni", "Koncetrace CO %", "Barva R", "Barva G", "Barva B", "Rezerva"};
-char digital1[8][50] = {"Pritomnost osob", "Detekcia pohybu", "Mag kontakt", "Pritomnost alko", "Detekcia ohna", "Detekcia koure", "Priblizenie", "Zaplaveni"};
+
 
 // set index based on mask
 int index_mask(int mask){
@@ -275,7 +284,7 @@ void executeCommand(char *command)
 // 		case 131:
 // 			json_string = meteorologicke[index_mask(buffer_mask)];
 // 			break;
-		case 0:			json_string = meteorologicke[index_mask(buffer_mask)];			break;	}	// setting topic based on received data	sprintf(info.topic,"/ssy/test/%s",json_string);	// setting info abount json file -- data (final_json) and length (len_json)	info.len_json = sprintf(info.final_json, "{\"%s\":%d}",json_string,buffer_data);		}//***************** JSON: END
+		case 0:			json_string = meteorologicke[index_mask(buffer_mask)];			break;	}	// setting topic based on received data	sprintf(info.topic,PUBLISH_TOPIC,json_string);	// setting info abount json file -- data (final_json) and length (len_json)	info.len_json = sprintf(info.final_json, "{\"%s\":%d}",json_string,buffer_data);		}//***************** JSON: END
 
 	
 
@@ -375,9 +384,9 @@ int main()
 	MQTTPacket_connectData data = MQTTPacket_connectData_initializer;
 	data.willFlag = 0;
 	data.MQTTVersion = 4;//3;
-	data.clientID.cstring = (char*)"w5500_avr_client";
-	data.username.cstring = (char*)"user1234";
-	data.password.cstring = (char*)"\0";
+	data.clientID.cstring = (char*)CLIENT;
+	data.username.cstring = (char*)USER;
+	data.password.cstring = (char*)PASSWORD;
 	data.keepAliveInterval = 60;
 	data.cleansession = 1;
 	mqtt_rc = MQTTConnect(&mqtt_client, &data);
@@ -392,7 +401,7 @@ int main()
 	}
 	
 	// Subscribe to all topics
-	char SubString[] = "/ssy/test/#";// Subscribe for all that begin from "/ssy/test/"
+	char SubString[] = SUBSCRIBE_TOPIC;// Subscribe for all that begin from "/ssy/test/"
 	mqtt_rc = MQTTSubscribe(&mqtt_client, SubString, QOS0, messageArrived);
 	PRINTF("Subscribed (%s) %d\r\n", SubString, mqtt_rc);
 	// timers defined

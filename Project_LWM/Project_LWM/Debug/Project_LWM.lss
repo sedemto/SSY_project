@@ -21,15 +21,15 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, READONLY, DEBUGGING
   8 .debug_abbrev 00004ce0  00000000  00000000  00019328  2**0
                   CONTENTS, READONLY, DEBUGGING
-  9 .debug_line   000070d0  00000000  00000000  0001e008  2**0
+  9 .debug_line   000070d1  00000000  00000000  0001e008  2**0
                   CONTENTS, READONLY, DEBUGGING
- 10 .debug_frame  00002828  00000000  00000000  000250d8  2**2
+ 10 .debug_frame  00002828  00000000  00000000  000250dc  2**2
                   CONTENTS, READONLY, DEBUGGING
- 11 .debug_str    00003ac4  00000000  00000000  00027900  2**0
+ 11 .debug_str    00003ac4  00000000  00000000  00027904  2**0
                   CONTENTS, READONLY, DEBUGGING
- 12 .debug_loc    0000ca38  00000000  00000000  0002b3c4  2**0
+ 12 .debug_loc    0000ca38  00000000  00000000  0002b3c8  2**0
                   CONTENTS, READONLY, DEBUGGING
- 13 .debug_ranges 00000aa0  00000000  00000000  00037dfc  2**0
+ 13 .debug_ranges 00000aa0  00000000  00000000  00037e00  2**0
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
@@ -10692,9 +10692,9 @@ void spi_wb_burst(uint8_t *buf, uint16_t len) {
     44a2:	08 95       	ret
 
 000044a4 <messageArrived>:
-#define PUBLISH_CONFIG_0         "/ssy/test/config"
-#define PUBLISH_TEPLOTA_0         "/ssy/test/teplota"
-//#define PUBLISH_AVR_DEBUG         "/w5500_avr_dbg"
+
+
+
 //MQTT subscribe call-back is here
 void messageArrived(MessageData* md)
 {
@@ -10771,7 +10771,7 @@ void messageArrived(MessageData* md)
     4526:	9f 4f       	sbci	r25, 0xFF	; 255
     4528:	0e 94 54 38 	call	0x70a8	; 0x70a8 <strncpy>
 	
-	if(!strcmp(_topic_name,"/ssy/test/config")){
+	if(!strcmp(_topic_name,PUBLISH_CONFIG_0)){
     452c:	68 e0       	ldi	r22, 0x08	; 8
     452e:	7b e0       	ldi	r23, 0x0B	; 11
     4530:	ce 01       	movw	r24, r28
@@ -11343,7 +11343,7 @@ static void create_json()
 			break;
 	}
 	// setting topic based on received data
-	sprintf(info.topic,"/ssy/test/%s",json_string);
+	sprintf(info.topic,PUBLISH_TOPIC,json_string);
     48ae:	df 93       	push	r29
     48b0:	cf 93       	push	r28
     48b2:	89 e1       	ldi	r24, 0x19	; 25
@@ -12044,7 +12044,7 @@ int main()
     4cee:	ce 5a       	subi	r28, 0xAE	; 174
     4cf0:	d0 40       	sbci	r29, 0x00	; 0
     4cf2:	84 ef       	ldi	r24, 0xF4	; 244
-	data.clientID.cstring = (char*)"w5500_avr_client";
+	data.clientID.cstring = (char*)CLIENT;
     4cf4:	9b e0       	ldi	r25, 0x0B	; 11
     4cf6:	c1 55       	subi	r28, 0x51	; 81
     4cf8:	df 4f       	sbci	r29, 0xFF	; 255
@@ -12053,7 +12053,7 @@ int main()
     4cfe:	cf 5a       	subi	r28, 0xAF	; 175
     4d00:	d0 40       	sbci	r29, 0x00	; 0
     4d02:	85 e0       	ldi	r24, 0x05	; 5
-	data.username.cstring = (char*)"user1234";
+	data.username.cstring = (char*)USER;
     4d04:	9c e0       	ldi	r25, 0x0C	; 12
     4d06:	cd 52       	subi	r28, 0x2D	; 45
     4d08:	df 4f       	sbci	r29, 0xFF	; 255
@@ -12062,7 +12062,7 @@ int main()
     4d0e:	c3 5d       	subi	r28, 0xD3	; 211
     4d10:	d0 40       	sbci	r29, 0x00	; 0
     4d12:	89 e9       	ldi	r24, 0x99	; 153
-	data.password.cstring = (char*)"\0";
+	data.password.cstring = (char*)PASSWORD;
     4d14:	9a e0       	ldi	r25, 0x0A	; 10
     4d16:	c5 52       	subi	r28, 0x25	; 37
     4d18:	df 4f       	sbci	r29, 0xFF	; 255
@@ -12122,7 +12122,7 @@ int main()
 	}
 	
 	// Subscribe to all topics
-	char SubString[] = "/ssy/test/#";// Subscribe for all that begin from "/ssy/test/"
+	char SubString[] = SUBSCRIBE_TOPIC;// Subscribe for all that begin from "/ssy/test/"
     4d78:	33 ee       	ldi	r19, 0xE3	; 227
     4d7a:	e3 0e       	add	r14, r19
     4d7c:	f1 1c       	adc	r15, r1
