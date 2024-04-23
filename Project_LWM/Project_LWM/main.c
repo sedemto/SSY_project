@@ -24,6 +24,7 @@
 #include "mqtt_interface.h"
 #include "MQTTClient.h"
 #include "json_decoder.h"
+#include <math.h>
 
 
 
@@ -70,14 +71,20 @@ volatile unsigned long _millis; // for millis tick !! Overflow every ~49.7 days
 uint16_t buffer_data;
 uint8_t buffer_mask;
 uint16_t clusterID;
-extern uint8_t data_ready = 0;
+uint8_t data_ready = 0;
 char json_buffer[100] = {0};
-char final_json[100] = "\0";
-int len_json = 0;
+	
+typedef struct json
+{
+	char final_json[100];
+	char topic[50];
+	int len_json;
+
+}json_info;
 uint8_t json_config_ready = 0;
 uint16_t mqtt_timer = 5000;
 int vypis_cau = 0;
-
+json_info info;
 
 //******************* MQTT: BEGIN
 #define SOCK_MQTT       5
@@ -195,12 +202,48 @@ char *meteorologicke[50] = {"Teplota", "Tlak", "Vlhkost vzduchu","Osvetlenie","C
 char *analog2[50] = {"Akcelerometer_x", "Akcelerometer_y", "Akcelerometer","Naklon_x","Naklon_y","Naklon_z","Rychlost pohybu","Rezerva"};
 char *zdravotni[50] = {"Tep", "Okyslyceni krve", "Tlak H","Tlak L","Teplota","Glukoza","Dechova frekvence","Rezerva"};
 char *analog_2[50] = {"PH", "Vyska hladiny", "Prietok kapaliny","Vlhkost pudy","Hustota","Koncentrace chloru","Vibrace","Rezerva"};
-	
+char pasive[8][50] = {"Odpor", "Indukcnost", "Kapacita", "PN", "Impedancia", "Rez freq", "Tau", "Faktor kvality"};
+char active[8][50] = {"Napatie", "Proud", "Freq", "Vykon", "Strida", "Ucinnik", "Fazovy posun", "Rezerva"};
+char analog3[8][50] = {"Vzdialenost", "Mag pole", "Ionizacni zareni", "Koncetrace CO %", "Barva R", "Barva G", "Barva B", "Rezerva"};
+char digital1[8][50] = {"Pritomnost osob", "Detekcia pohybu", "Mag kontakt", "Pritomnost alko", "Detekcia ohna", "Detekcia koure", "Priblizenie", "Zaplaveni"};
+
+int index_mask(int mask){
+	int index = 0;
+	switch(mask){
+		case 1:
+			index = 0;
+			break;
+		case 2:
+			index = 1;
+			break;
+		case 4:
+			index = 2;
+			break;
+		case 8:
+			index = 3;
+			break;
+		case 16:
+			index = 4;
+			break;
+		case 32:
+			index = 5;
+			break;
+		case 64:
+			index = 6;
+			break;
+		case 128:
+			index = 7;
+			break;
+		
+	}
+	return index;
+}
 
 void executeCommand(char *command)
 {
 	jsonNode_t *root = 0;
 	jsonDecoderStatus_t ret;
+
 	char state[5];
 	int cislo_timer;
 	int cislo_vypis;
@@ -224,7 +267,13 @@ void executeCommand(char *command)
 	{
 		vypis_cau = cislo_vypis;
 	}
-}static void create_json(){	wdt_reset();	final_json[100] = "\0";	char* json_string = "\0";	switch(clusterID){		case 1:			json_string = meteorologicke[(uint8_t)sqrt(buffer_mask)];			break;		case 2:			json_string = analog2[(uint8_t)sqrt(buffer_mask)];			break;		case 3:			json_string = zdravotni[(uint8_t)sqrt(buffer_mask)];			break;		case 4:			json_string = analog_2[(uint8_t)sqrt(buffer_mask)];			break;		case 5:			json_string = meteorologicke[(uint8_t)sqrt(buffer_mask)];			break;		case 7:			json_string = meteorologicke[(uint8_t)sqrt(buffer_mask)];			break;		case 129:			json_string = meteorologicke[(uint8_t)sqrt(buffer_mask)];			break;		case 130:			json_string = meteorologicke[(uint8_t)sqrt(buffer_mask)];			break;		case 131:			json_string = meteorologicke[(uint8_t)sqrt(buffer_mask)];			break;		case 0:			printf("som tuuuuu");			json_string = meteorologicke[(uint8_t)sqrt(buffer_mask)];			break;	}	len_json = sprintf(final_json, "{\"%s\":%d}",json_string,buffer_data);		}//***************** JSON: END
+}static void create_json(){	wdt_reset();	info.final_json[100] = "\0";	char* json_string = "\0";	switch(clusterID){		case 1:			json_string = meteorologicke[index_mask(buffer_mask)];			break;		case 2:			json_string = analog2[index_mask(buffer_mask)];			break;		case 3:			json_string = zdravotni[index_mask(buffer_mask)];			break;		case 4:			json_string = analog_2[index_mask(buffer_mask)];			break;		case 5:			json_string = analog3[index_mask(buffer_mask)];			break;		case 6:			json_string = active[index_mask(buffer_mask)];			break;		case 7:			json_string = pasive[index_mask(buffer_mask)];			break;		case 129:			json_string = digital1[index_mask(buffer_mask)];			break;// 		case 130:
+// 			json_string = meteorologicke[index_mask(buffer_mask)];
+// 			break;
+// 		case 131:
+// 			json_string = meteorologicke[index_mask(buffer_mask)];
+// 			break;
+		case 0:			json_string = meteorologicke[index_mask(buffer_mask)];			break;	}	sprintf(info.topic,"/ssy/test/%s",json_string);	info.len_json = sprintf(info.final_json, "{\"%s\":%d}",json_string,buffer_data);		}//***************** JSON: END
 
 	
 
@@ -347,7 +396,7 @@ int main()
 	// timers defined
 	uint32_t timer_mqtt_pub_1sec = millis();
 	uint32_t timer_link_1sec = millis();
-	uint32_t timer_rstWDtimer  = millis();
+
 	while(1)
 	{	
 		SYS_TaskHandler();
@@ -365,7 +414,7 @@ int main()
   		if(data_ready){
   			//_len = sprintf(_msg, "%d",clusterID);
 			create_json();
-  			mqtt_pub(&mqtt_client, PUBLISH_TEPLOTA_0,final_json,len_json );
+  			mqtt_pub(&mqtt_client, info.topic,info.final_json,info.len_json );
   			data_ready = 0;
 			if(vypis_cau){
 				PRINTF("CAAAAU\n\r");
