@@ -373,7 +373,6 @@ Discarded input sections
  .text          0x00000000        0x0 main.o
  .data          0x00000000        0x0 main.o
  .bss           0x00000000        0x0 main.o
- .data.ping_ip  0x00000000        0x4 main.o
  .text          0x00000000        0x0 spi/spi.o
  .data          0x00000000        0x0 spi/spi.o
  .bss           0x00000000        0x0 spi/spi.o
@@ -912,37 +911,37 @@ END GROUP
  *libc.a:*(.progmem.data)
  .progmem.data  0x0000015c       0xfa c:/apps/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr6\libc.a(ftoa_engine.o)
  *(.progmem*)
- .progmem.data.__c.3751
+ .progmem.data.__c.3752
                 0x00000256        0xa main.o
- .progmem.data.__c.3749
+ .progmem.data.__c.3750
                 0x00000260        0xc main.o
- .progmem.data.__c.3746
+ .progmem.data.__c.3747
                 0x0000026c       0x2a main.o
- .progmem.data.__c.3744
+ .progmem.data.__c.3745
                 0x00000296       0x15 main.o
- .progmem.data.__c.3742
+ .progmem.data.__c.3743
                 0x000002ab       0x2c main.o
- .progmem.data.__c.3729
+ .progmem.data.__c.3730
                 0x000002d7        0x9 main.o
- .progmem.data.__c.3721
+ .progmem.data.__c.3722
                 0x000002e0       0x1e main.o
- .progmem.data.__c.3725
+ .progmem.data.__c.3726
                 0x000002fe       0x15 main.o
- .progmem.data.__c.3719
+ .progmem.data.__c.3720
                 0x00000313       0x20 main.o
- .progmem.data.__c.3716
+ .progmem.data.__c.3717
                 0x00000333       0x32 main.o
- .progmem.data.__c.3706
+ .progmem.data.__c.3707
                 0x00000365       0x1b main.o
- .progmem.data.__c.3585
+ .progmem.data.__c.3584
                 0x00000380       0x3d main.o
- .progmem.data.__c.3583
+ .progmem.data.__c.3582
                 0x000003bd        0xb main.o
- .progmem.data.__c.3581
+ .progmem.data.__c.3580
                 0x000003c8        0x8 main.o
- .progmem.data.__c.3578
+ .progmem.data.__c.3577
                 0x000003d0       0x14 main.o
- .progmem.data.__c.3567
+ .progmem.data.__c.3566
                 0x000003e4       0x14 main.o
                 0x000003f8                . = ALIGN (0x2)
  *(.jumptables)
@@ -1845,9 +1844,9 @@ END GROUP
                 0x00800e2a       0x11 lwm/lwm.o
  .bss.appTimer  0x00800e3b        0xd lwm/lwm.o
  .bss.appState  0x00800e48        0x1 lwm/lwm.o
- .bss.mqtt_err_cnt.3576
+ .bss.mqtt_err_cnt.3575
                 0x00800e49        0x1 main.o
- .bss.mqtt_pub_count.3575
+ .bss.mqtt_pub_count.3574
                 0x00800e4a        0x4 main.o
  .bss.vypis_cau
                 0x00800e4e        0x2 main.o
@@ -2099,7 +2098,7 @@ END GROUP
 .debug_pubnames
  *(.debug_pubnames)
 
-.debug_info     0x00000000    0x10851
+.debug_info     0x00000000    0x10824
  *(.debug_info .gnu.linkonce.wi.*)
  .debug_info    0x00000000     0x13e6 C:/Apps/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.7.374/gcc/dev/atmega256rfr2/avr6/crtatmega256rfr2.o
  .debug_info    0x000013e6     0x16df Ethernet/socket.o
@@ -2117,22 +2116,22 @@ END GROUP
  .debug_info    0x000098a3      0x1a0 json/mem_model.o
  .debug_info    0x00009a43      0x3e1 json/parser.o
  .debug_info    0x00009e24      0x8d2 lwm/lwm.o
- .debug_info    0x0000a6f6     0x188f main.o
- .debug_info    0x0000bf85       0x83 spi/spi.o
- .debug_info    0x0000c008      0x128 stack/hal/atmega256rfr2/src/hal.o
- .debug_info    0x0000c130       0xe4 stack/hal/atmega256rfr2/src/halTimer.o
- .debug_info    0x0000c214      0x184 stack/hal/drivers/atmega256rfr2/src/halSleep.o
- .debug_info    0x0000c398      0x31a stack/hal/drivers/atmega256rfr2/src/halUart.o
- .debug_info    0x0000c6b2      0x4ca stack/nwk/src/nwk.o
- .debug_info    0x0000cb7c      0x76c stack/nwk/src/nwkDataReq.o
- .debug_info    0x0000d2e8      0x572 stack/nwk/src/nwkFrame.o
- .debug_info    0x0000d85a      0xb45 stack/nwk/src/nwkRoute.o
- .debug_info    0x0000e39f      0xc0f stack/nwk/src/nwkRx.o
- .debug_info    0x0000efae      0xa20 stack/nwk/src/nwkTx.o
- .debug_info    0x0000f9ce      0x7c4 stack/phy/atmega256rfr2/src/phy.o
- .debug_info    0x00010192      0x140 stack/sys/src/sys.o
- .debug_info    0x000102d2      0x341 stack/sys/src/sysTimer.o
- .debug_info    0x00010613      0x23e uart/uart.o
+ .debug_info    0x0000a6f6     0x1862 main.o
+ .debug_info    0x0000bf58       0x83 spi/spi.o
+ .debug_info    0x0000bfdb      0x128 stack/hal/atmega256rfr2/src/hal.o
+ .debug_info    0x0000c103       0xe4 stack/hal/atmega256rfr2/src/halTimer.o
+ .debug_info    0x0000c1e7      0x184 stack/hal/drivers/atmega256rfr2/src/halSleep.o
+ .debug_info    0x0000c36b      0x31a stack/hal/drivers/atmega256rfr2/src/halUart.o
+ .debug_info    0x0000c685      0x4ca stack/nwk/src/nwk.o
+ .debug_info    0x0000cb4f      0x76c stack/nwk/src/nwkDataReq.o
+ .debug_info    0x0000d2bb      0x572 stack/nwk/src/nwkFrame.o
+ .debug_info    0x0000d82d      0xb45 stack/nwk/src/nwkRoute.o
+ .debug_info    0x0000e372      0xc0f stack/nwk/src/nwkRx.o
+ .debug_info    0x0000ef81      0xa20 stack/nwk/src/nwkTx.o
+ .debug_info    0x0000f9a1      0x7c4 stack/phy/atmega256rfr2/src/phy.o
+ .debug_info    0x00010165      0x140 stack/sys/src/sys.o
+ .debug_info    0x000102a5      0x341 stack/sys/src/sysTimer.o
+ .debug_info    0x000105e6      0x23e uart/uart.o
 
 .debug_abbrev   0x00000000     0x4ce0
  *(.debug_abbrev)
@@ -2169,7 +2168,7 @@ END GROUP
  .debug_abbrev  0x000049f0      0x19b stack/sys/src/sysTimer.o
  .debug_abbrev  0x00004b8b      0x155 uart/uart.o
 
-.debug_line     0x00000000     0x70cf
+.debug_line     0x00000000     0x70d0
  *(.debug_line .debug_line.* .debug_line_end)
  .debug_line    0x00000000      0x272 C:/Apps/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.7.374/gcc/dev/atmega256rfr2/avr6/crtatmega256rfr2.o
  .debug_line    0x00000272      0xb7d Ethernet/socket.o
@@ -2187,22 +2186,22 @@ END GROUP
  .debug_line    0x000038dc       0xdd json/mem_model.o
  .debug_line    0x000039b9      0x24a json/parser.o
  .debug_line    0x00003c03      0x335 lwm/lwm.o
- .debug_line    0x00003f38      0x98d main.o
- .debug_line    0x000048c5       0xb7 spi/spi.o
- .debug_line    0x0000497c      0x167 stack/hal/atmega256rfr2/src/hal.o
- .debug_line    0x00004ae3      0x11e stack/hal/atmega256rfr2/src/halTimer.o
- .debug_line    0x00004c01      0x1a8 stack/hal/drivers/atmega256rfr2/src/halSleep.o
- .debug_line    0x00004da9      0x2b5 stack/hal/drivers/atmega256rfr2/src/halUart.o
- .debug_line    0x0000505e      0x2c6 stack/nwk/src/nwk.o
- .debug_line    0x00005324      0x293 stack/nwk/src/nwkDataReq.o
- .debug_line    0x000055b7      0x1e6 stack/nwk/src/nwkFrame.o
- .debug_line    0x0000579d      0x52d stack/nwk/src/nwkRoute.o
- .debug_line    0x00005cca      0x65f stack/nwk/src/nwkRx.o
- .debug_line    0x00006329      0x490 stack/nwk/src/nwkTx.o
- .debug_line    0x000067b9      0x3cf stack/phy/atmega256rfr2/src/phy.o
- .debug_line    0x00006b88      0x108 stack/sys/src/sys.o
- .debug_line    0x00006c90      0x2e7 stack/sys/src/sysTimer.o
- .debug_line    0x00006f77      0x158 uart/uart.o
+ .debug_line    0x00003f38      0x98e main.o
+ .debug_line    0x000048c6       0xb7 spi/spi.o
+ .debug_line    0x0000497d      0x167 stack/hal/atmega256rfr2/src/hal.o
+ .debug_line    0x00004ae4      0x11e stack/hal/atmega256rfr2/src/halTimer.o
+ .debug_line    0x00004c02      0x1a8 stack/hal/drivers/atmega256rfr2/src/halSleep.o
+ .debug_line    0x00004daa      0x2b5 stack/hal/drivers/atmega256rfr2/src/halUart.o
+ .debug_line    0x0000505f      0x2c6 stack/nwk/src/nwk.o
+ .debug_line    0x00005325      0x293 stack/nwk/src/nwkDataReq.o
+ .debug_line    0x000055b8      0x1e6 stack/nwk/src/nwkFrame.o
+ .debug_line    0x0000579e      0x52d stack/nwk/src/nwkRoute.o
+ .debug_line    0x00005ccb      0x65f stack/nwk/src/nwkRx.o
+ .debug_line    0x0000632a      0x490 stack/nwk/src/nwkTx.o
+ .debug_line    0x000067ba      0x3cf stack/phy/atmega256rfr2/src/phy.o
+ .debug_line    0x00006b89      0x108 stack/sys/src/sys.o
+ .debug_line    0x00006c91      0x2e7 stack/sys/src/sysTimer.o
+ .debug_line    0x00006f78      0x158 uart/uart.o
 
 .debug_frame    0x00000000     0x2828
  *(.debug_frame)
@@ -2238,7 +2237,7 @@ END GROUP
  .debug_frame   0x000026f8       0xc0 stack/sys/src/sysTimer.o
  .debug_frame   0x000027b8       0x70 uart/uart.o
 
-.debug_str      0x00000000     0x3acc
+.debug_str      0x00000000     0x3ac4
  *(.debug_str)
  .debug_str     0x00000000      0x7f7 C:/Apps/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.7.374/gcc/dev/atmega256rfr2/avr6/crtatmega256rfr2.o
  .debug_str     0x000007f7      0x435 Ethernet/socket.o
@@ -2271,37 +2270,37 @@ END GROUP
                                 0x341 (size before relaxing)
  .debug_str     0x0000209f      0x3e0 lwm/lwm.o
                                 0x5b7 (size before relaxing)
- .debug_str     0x0000247f      0x3c4 main.o
-                                0xb70 (size before relaxing)
- .debug_str     0x00002843        0xd spi/spi.o
+ .debug_str     0x0000247f      0x3bc main.o
+                                0xb62 (size before relaxing)
+ .debug_str     0x0000283b        0xd spi/spi.o
                                 0x187 (size before relaxing)
- .debug_str     0x00002850       0x55 stack/hal/atmega256rfr2/src/hal.o
+ .debug_str     0x00002848       0x55 stack/hal/atmega256rfr2/src/hal.o
                                 0x1e4 (size before relaxing)
- .debug_str     0x000028a5       0x47 stack/hal/atmega256rfr2/src/halTimer.o
+ .debug_str     0x0000289d       0x47 stack/hal/atmega256rfr2/src/halTimer.o
                                 0x1de (size before relaxing)
- .debug_str     0x000028ec       0x97 stack/hal/drivers/atmega256rfr2/src/halSleep.o
+ .debug_str     0x000028e4       0x97 stack/hal/drivers/atmega256rfr2/src/halSleep.o
                                 0x229 (size before relaxing)
- .debug_str     0x00002983       0x9e stack/hal/drivers/atmega256rfr2/src/halUart.o
+ .debug_str     0x0000297b       0x9e stack/hal/drivers/atmega256rfr2/src/halUart.o
                                 0x2a7 (size before relaxing)
- .debug_str     0x00002a21      0x14c stack/nwk/src/nwk.o
+ .debug_str     0x00002a19      0x14c stack/nwk/src/nwk.o
                                 0x36b (size before relaxing)
- .debug_str     0x00002b6d      0x293 stack/nwk/src/nwkDataReq.o
+ .debug_str     0x00002b65      0x293 stack/nwk/src/nwkDataReq.o
                                 0x59a (size before relaxing)
- .debug_str     0x00002e00       0x61 stack/nwk/src/nwkFrame.o
+ .debug_str     0x00002df8       0x61 stack/nwk/src/nwkFrame.o
                                 0x439 (size before relaxing)
- .debug_str     0x00002e61      0x1f2 stack/nwk/src/nwkRoute.o
+ .debug_str     0x00002e59      0x1f2 stack/nwk/src/nwkRoute.o
                                 0x643 (size before relaxing)
- .debug_str     0x00003053      0x2b6 stack/nwk/src/nwkRx.o
+ .debug_str     0x0000304b      0x2b6 stack/nwk/src/nwkRx.o
                                 0x77c (size before relaxing)
- .debug_str     0x00003309      0x1c7 stack/nwk/src/nwkTx.o
+ .debug_str     0x00003301      0x1c7 stack/nwk/src/nwkTx.o
                                 0x70c (size before relaxing)
- .debug_str     0x000034d0      0x518 stack/phy/atmega256rfr2/src/phy.o
+ .debug_str     0x000034c8      0x518 stack/phy/atmega256rfr2/src/phy.o
                                 0x7ab (size before relaxing)
- .debug_str     0x000039e8       0x3a stack/sys/src/sys.o
+ .debug_str     0x000039e0       0x3a stack/sys/src/sys.o
                                 0x206 (size before relaxing)
- .debug_str     0x00003a22       0x47 stack/sys/src/sysTimer.o
+ .debug_str     0x00003a1a       0x47 stack/sys/src/sysTimer.o
                                 0x29b (size before relaxing)
- .debug_str     0x00003a69       0x63 uart/uart.o
+ .debug_str     0x00003a61       0x63 uart/uart.o
                                 0x219 (size before relaxing)
 
 .debug_loc      0x00000000     0xca38

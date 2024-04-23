@@ -17,19 +17,19 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, READONLY
   6 .debug_aranges 00000b08  00000000  00000000  00007ffc  2**0
                   CONTENTS, READONLY, DEBUGGING
-  7 .debug_info   00010851  00000000  00000000  00008b04  2**0
+  7 .debug_info   00010824  00000000  00000000  00008b04  2**0
                   CONTENTS, READONLY, DEBUGGING
-  8 .debug_abbrev 00004ce0  00000000  00000000  00019355  2**0
+  8 .debug_abbrev 00004ce0  00000000  00000000  00019328  2**0
                   CONTENTS, READONLY, DEBUGGING
-  9 .debug_line   000070cf  00000000  00000000  0001e035  2**0
+  9 .debug_line   000070d0  00000000  00000000  0001e008  2**0
                   CONTENTS, READONLY, DEBUGGING
- 10 .debug_frame  00002828  00000000  00000000  00025104  2**2
+ 10 .debug_frame  00002828  00000000  00000000  000250d8  2**2
                   CONTENTS, READONLY, DEBUGGING
- 11 .debug_str    00003acc  00000000  00000000  0002792c  2**0
+ 11 .debug_str    00003ac4  00000000  00000000  00027900  2**0
                   CONTENTS, READONLY, DEBUGGING
- 12 .debug_loc    0000ca38  00000000  00000000  0002b3f8  2**0
+ 12 .debug_loc    0000ca38  00000000  00000000  0002b3c4  2**0
                   CONTENTS, READONLY, DEBUGGING
- 13 .debug_ranges 00000aa0  00000000  00000000  00037e30  2**0
+ 13 .debug_ranges 00000aa0  00000000  00000000  00037dfc  2**0
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
@@ -223,68 +223,68 @@ Disassembly of section .text:
      238:	d1 84 4b 38 1b f7 7c 1d 90 1d a4 bb e4 24 20 32     ..K8..|......$ 2
      248:	84 72 5e 22 81 00 c9 f1 24 ec a1 e5 3d 27           .r^"....$...='
 
-00000256 <__c.3751>:
+00000256 <__c.3752>:
      256:	44 48 43 50 20 49 50 0d 0a 00                       DHCP IP...
 
-00000260 <__c.3749>:
+00000260 <__c.3750>:
      260:	53 54 41 54 49 43 20 49 50 0d 0a 00                 STATIC IP...
 
-0000026c <__c.3746>:
+0000026c <__c.3747>:
      26c:	3d 3d 3d 3d 3d 3d 3d 3d 3d 3d 3d 3d 3d 3d 3d 3d     ================
      27c:	3d 3d 3d 3d 3d 3d 3d 3d 3d 3d 3d 3d 3d 3d 3d 3d     ================
      28c:	3d 3d 3d 3d 3d 3d 3d 0d 0a 00                       =======...
 
-00000296 <__c.3744>:
+00000296 <__c.3745>:
      296:	20 57 49 5a 6e 65 74 20 63 68 69 70 3a 20 20 25      WIZnet chip:  %
      2a6:	73 20 0d 0a 00                                      s ...
 
-000002ab <__c.3742>:
+000002ab <__c.3743>:
      2ab:	0d 0a 3d 3d 3d 3d 3d 3d 3d 3d 3d 3d 3d 3d 3d 3d     ..==============
      2bb:	3d 3d 3d 3d 3d 3d 3d 3d 3d 3d 3d 3d 3d 3d 3d 3d     ================
      2cb:	3d 3d 3d 3d 3d 3d 3d 3d 3d 0d 0a 00                 =========...
 
-000002d7 <__c.3729>:
+000002d7 <__c.3730>:
      2d7:	43 41 41 41 41 55 0a 0d 00                          CAAAAU...
 
-000002e0 <__c.3721>:
+000002e0 <__c.3722>:
      2e0:	2d 2d 4d 51 54 54 20 43 6f 6e 6e 65 63 74 65 64     --MQTT Connected
      2f0:	20 45 52 52 4f 52 3a 20 25 6c 64 0d 0a 00            ERROR: %ld...
 
-000002fe <__c.3725>:
+000002fe <__c.3726>:
      2fe:	53 75 62 73 63 72 69 62 65 64 20 28 25 73 29 20     Subscribed (%s) 
      30e:	25 64 0d 0a 00                                      %d...
 
-00000313 <__c.3719>:
+00000313 <__c.3720>:
      313:	2b 2b 4d 51 54 54 20 43 6f 6e 6e 65 63 74 65 64     ++MQTT Connected
      323:	20 53 55 43 43 45 53 53 3a 20 25 6c 64 0d 0a 00      SUCCESS: %ld...
 
-00000333 <__c.3716>:
+00000333 <__c.3717>:
      333:	3e 3e 54 72 79 69 6e 67 20 63 6f 6e 6e 65 63 74     >>Trying connect
      343:	20 74 6f 20 4d 51 54 54 20 62 72 6f 6b 65 72 3a      to MQTT broker:
      353:	20 25 64 2e 25 64 2e 25 64 2e 25 64 20 2e 2e 0d      %d.%d.%d.%d ...
      363:	0a 00                                               ..
 
-00000365 <__c.3706>:
+00000365 <__c.3707>:
      365:	3e 3e 20 46 72 65 65 20 52 41 4d 20 69 73 3a 20     >> Free RAM is: 
      375:	25 64 20 62 79 74 65 73 0d 0a 00                    %d bytes...
 
-00000380 <__c.3585>:
+00000380 <__c.3584>:
      380:	43 6f 6e 6e 65 63 74 69 6f 6e 20 77 69 74 68 20     Connection with 
      390:	4d 51 54 54 20 42 72 6f 6b 65 72 20 77 61 73 20     MQTT Broker was 
      3a0:	6c 6f 73 74 21 21 0d 0a 52 65 62 6f 6f 74 20 74     lost!!..Reboot t
      3b0:	68 65 20 62 6f 61 72 64 2e 2e 0d 0a 00              he board.....
 
-000003bd <__c.3583>:
+000003bd <__c.3582>:
      3bd:	20 2d 20 45 52 52 4f 52 0d 0a 00                     - ERROR...
 
-000003c8 <__c.3581>:
+000003c8 <__c.3580>:
      3c8:	20 2d 20 4f 4b 0d 0a 00                              - OK...
 
-000003d0 <__c.3578>:
+000003d0 <__c.3577>:
      3d0:	3e 3e 4d 51 54 54 20 70 75 62 20 6d 73 67 20 25     >>MQTT pub msg %
      3e0:	6c 75 20 00                                         lu .
 
-000003e4 <__c.3567>:
+000003e4 <__c.3566>:
      3e4:	3c 3c 4d 51 54 54 20 53 75 62 3a 20 5b 25 73 5d     <<MQTT Sub: [%s]
      3f4:	20 25 73 00                                          %s.
 
@@ -10862,17 +10862,17 @@ void mqtt_pub(Client* mqtt_client, char * mqtt_topic, char * mqtt_msg, int mqtt_
     45c2:	a8 95       	wdr
 	//wdt_disable();
 	PRINTF(">>MQTT pub msg %lu ", ++mqtt_pub_count);
-    45c4:	80 91 4a 0e 	lds	r24, 0x0E4A	; 0x800e4a <mqtt_pub_count.3575>
-    45c8:	90 91 4b 0e 	lds	r25, 0x0E4B	; 0x800e4b <mqtt_pub_count.3575+0x1>
-    45cc:	a0 91 4c 0e 	lds	r26, 0x0E4C	; 0x800e4c <mqtt_pub_count.3575+0x2>
-    45d0:	b0 91 4d 0e 	lds	r27, 0x0E4D	; 0x800e4d <mqtt_pub_count.3575+0x3>
+    45c4:	80 91 4a 0e 	lds	r24, 0x0E4A	; 0x800e4a <mqtt_pub_count.3574>
+    45c8:	90 91 4b 0e 	lds	r25, 0x0E4B	; 0x800e4b <mqtt_pub_count.3574+0x1>
+    45cc:	a0 91 4c 0e 	lds	r26, 0x0E4C	; 0x800e4c <mqtt_pub_count.3574+0x2>
+    45d0:	b0 91 4d 0e 	lds	r27, 0x0E4D	; 0x800e4d <mqtt_pub_count.3574+0x3>
     45d4:	01 96       	adiw	r24, 0x01	; 1
     45d6:	a1 1d       	adc	r26, r1
     45d8:	b1 1d       	adc	r27, r1
-    45da:	80 93 4a 0e 	sts	0x0E4A, r24	; 0x800e4a <mqtt_pub_count.3575>
-    45de:	90 93 4b 0e 	sts	0x0E4B, r25	; 0x800e4b <mqtt_pub_count.3575+0x1>
-    45e2:	a0 93 4c 0e 	sts	0x0E4C, r26	; 0x800e4c <mqtt_pub_count.3575+0x2>
-    45e6:	b0 93 4d 0e 	sts	0x0E4D, r27	; 0x800e4d <mqtt_pub_count.3575+0x3>
+    45da:	80 93 4a 0e 	sts	0x0E4A, r24	; 0x800e4a <mqtt_pub_count.3574>
+    45de:	90 93 4b 0e 	sts	0x0E4B, r25	; 0x800e4b <mqtt_pub_count.3574+0x1>
+    45e2:	a0 93 4c 0e 	sts	0x0E4C, r26	; 0x800e4c <mqtt_pub_count.3574+0x2>
+    45e6:	b0 93 4d 0e 	sts	0x0E4D, r27	; 0x800e4d <mqtt_pub_count.3574+0x3>
     45ea:	bf 93       	push	r27
     45ec:	af 93       	push	r26
     45ee:	9f 93       	push	r25
@@ -10924,7 +10924,7 @@ void mqtt_pub(Client* mqtt_client, char * mqtt_topic, char * mqtt_msg, int mqtt_
     4642:	59 f4       	brne	.+22     	; 0x465a <mqtt_pub+0xc4>
 	{
 		mqtt_err_cnt  = 0;
-    4644:	10 92 49 0e 	sts	0x0E49, r1	; 0x800e49 <mqtt_err_cnt.3576>
+    4644:	10 92 49 0e 	sts	0x0E49, r1	; 0x800e49 <mqtt_err_cnt.3575>
 		PRINTF(" - OK\r\n");
     4648:	88 ec       	ldi	r24, 0xC8	; 200
     464a:	93 e0       	ldi	r25, 0x03	; 3
@@ -10945,10 +10945,10 @@ void mqtt_pub(Client* mqtt_client, char * mqtt_topic, char * mqtt_msg, int mqtt_
     4662:	0e 94 c5 38 	call	0x718a	; 0x718a <printf_P>
 		//Reboot device after 20 continuous errors (~ 20sec)
 		if(mqtt_err_cnt++ > 20)
-    4666:	80 91 49 0e 	lds	r24, 0x0E49	; 0x800e49 <mqtt_err_cnt.3576>
+    4666:	80 91 49 0e 	lds	r24, 0x0E49	; 0x800e49 <mqtt_err_cnt.3575>
     466a:	91 e0       	ldi	r25, 0x01	; 1
     466c:	98 0f       	add	r25, r24
-    466e:	90 93 49 0e 	sts	0x0E49, r25	; 0x800e49 <mqtt_err_cnt.3576>
+    466e:	90 93 49 0e 	sts	0x0E49, r25	; 0x800e49 <mqtt_err_cnt.3575>
     4672:	0f 90       	pop	r0
     4674:	0f 90       	pop	r0
     4676:	85 31       	cpi	r24, 0x15	; 21
@@ -11046,9 +11046,9 @@ unsigned long millis(void)
     470c:	08 95       	ret
 
 0000470e <index_mask>:
-char analog3[8][50] = {"Vzdialenost", "Mag pole", "Ionizacni zareni", "Koncetrace CO %", "Barva R", "Barva G", "Barva B", "Rezerva"};
 char digital1[8][50] = {"Pritomnost osob", "Detekcia pohybu", "Mag kontakt", "Pritomnost alko", "Detekcia ohna", "Detekcia koure", "Priblizenie", "Zaplaveni"};
 
+// set index based on mask
 int index_mask(int mask){
 	int index = 0;
 	switch(mask){
@@ -11073,10 +11073,10 @@ int index_mask(int mask){
     4732:	a1 f0       	breq	.+40     	; 0x475c <index_mask+0x4e>
     4734:	80 97       	sbiw	r24, 0x20	; 32
     4736:	61 f0       	breq	.+24     	; 0x4750 <index_mask+0x42>
-char active[8][50] = {"Napatie", "Proud", "Freq", "Vykon", "Strida", "Ucinnik", "Fazovy posun", "Rezerva"};
 char analog3[8][50] = {"Vzdialenost", "Mag pole", "Ionizacni zareni", "Koncetrace CO %", "Barva R", "Barva G", "Barva B", "Rezerva"};
 char digital1[8][50] = {"Pritomnost osob", "Detekcia pohybu", "Mag kontakt", "Pritomnost alko", "Detekcia ohna", "Detekcia koure", "Priblizenie", "Zaplaveni"};
 
+// set index based on mask
 int index_mask(int mask){
 	int index = 0;
     4738:	80 e0       	ldi	r24, 0x00	; 0
@@ -11154,6 +11154,7 @@ static void create_json()
     4770:	9a e0       	ldi	r25, 0x0A	; 10
     4772:	80 93 39 23 	sts	0x2339, r24	; 0x802339 <info+0x64>
 	char* json_string = "\0";
+	// set sensor based on clusterID and sent data received
 	switch(clusterID){
     4776:	80 91 76 27 	lds	r24, 0x2776	; 0x802776 <clusterID>
     477a:	90 91 77 27 	lds	r25, 0x2777	; 0x802777 <clusterID+0x1>
@@ -11337,11 +11338,11 @@ static void create_json()
 	char* json_string = "\0";
     48aa:	c9 e9       	ldi	r28, 0x99	; 153
     48ac:	da e0       	ldi	r29, 0x0A	; 10
-// 			break;
 		case 0:
 			json_string = meteorologicke[index_mask(buffer_mask)];
 			break;
 	}
+	// setting topic based on received data
 	sprintf(info.topic,"/ssy/test/%s",json_string);
     48ae:	df 93       	push	r29
     48b0:	cf 93       	push	r28
@@ -11354,6 +11355,7 @@ static void create_json()
     48be:	9f 93       	push	r25
     48c0:	8f 93       	push	r24
     48c2:	0e 94 1c 39 	call	0x7238	; 0x7238 <sprintf>
+	// setting info abount json file -- data (final_json) and length (len_json)
 	info.len_json = sprintf(info.final_json, "{\"%s\":%d}",json_string,buffer_data);
     48c6:	80 91 75 26 	lds	r24, 0x2675	; 0x802675 <buffer_data+0x1>
     48ca:	8f 93       	push	r24
@@ -11403,8 +11405,8 @@ void executeCommand(char *command)
 	jsonNode_t *root = 0;
     4914:	1a 82       	std	Y+2, r1	; 0x02
     4916:	19 82       	std	Y+1, r1	; 0x01
+	jsonDecoderStatus_t ret;
 
-	char state[5];
 	int cislo_timer;
 	int cislo_vypis;
 
@@ -11424,7 +11426,7 @@ void executeCommand(char *command)
     4926:	ce 01       	movw	r24, r28
     4928:	01 96       	adiw	r24, 0x01	; 1
     492a:	50 da       	rcall	.-2912   	; 0x3dcc <JSON_DECODER_getRoot>
-
+	// setting variables based on configuration info
 	ret = JSON_DECODER_getNumber(root, "mqtt_timer", &cislo_timer);
     492c:	ae 01       	movw	r20, r28
     492e:	4d 5f       	subi	r20, 0xFD	; 253
@@ -12120,7 +12122,7 @@ int main()
 	}
 	
 	// Subscribe to all topics
-	char SubString[] = "/ssy/test/#";// Subscribe for all that begin from "/"
+	char SubString[] = "/ssy/test/#";// Subscribe for all that begin from "/ssy/test/"
     4d78:	33 ee       	ldi	r19, 0xE3	; 227
     4d7a:	e3 0e       	add	r14, r19
     4d7c:	f1 1c       	adc	r15, r1
@@ -12201,6 +12203,7 @@ int main()
     4df6:	5c d1       	rcall	.+696    	; 0x50b0 <HAL_UartTaskHandler>
 		APP_TaskHandler();
     4df8:	fd da       	rcall	.-2566   	; 0x43f4 <APP_TaskHandler>
+		// reset watchdog at every cycle
 		wdt_reset();
     4dfa:	a8 95       	wdr
 		// json config
@@ -12216,16 +12219,14 @@ int main()
     4e0a:	10 92 50 0e 	sts	0x0E50, r1	; 0x800e50 <json_config_ready>
 		}
 		// mqtt publish when LWM msg sent
-		//static char _msg[100] = "\0";
-		//static int _len;
   		if(data_ready){
     4e0e:	80 91 b5 0e 	lds	r24, 0x0EB5	; 0x800eb5 <data_ready>
     4e12:	88 23       	and	r24, r24
     4e14:	e9 f0       	breq	.+58     	; 0x4e50 <main+0x294>
-  			//_len = sprintf(_msg, "%d",clusterID);
 			create_json();
     4e16:	a8 dc       	rcall	.-1712   	; 0x4768 <create_json>
     4e18:	20 91 6b 23 	lds	r18, 0x236B	; 0x80236b <info+0x96>
+			// publish data received
   			mqtt_pub(&mqtt_client, info.topic,info.final_json,info.len_json );
     4e1c:	30 91 6c 23 	lds	r19, 0x236C	; 0x80236c <info+0x97>
     4e20:	45 ed       	ldi	r20, 0xD5	; 213
@@ -12239,6 +12240,7 @@ int main()
     4e30:	10 92 b5 0e 	sts	0x0EB5, r1	; 0x800eb5 <data_ready>
   			data_ready = 0;
     4e34:	80 91 4e 0e 	lds	r24, 0x0E4E	; 0x800e4e <vypis_cau>
+			// print message when "vypis_cau" is 1
 			if(vypis_cau){
     4e38:	90 91 4f 0e 	lds	r25, 0x0E4F	; 0x800e4f <vypis_cau+0x1>
     4e3c:	89 2b       	or	r24, r25
@@ -12278,6 +12280,7 @@ int main()
     4e78:	5c 01       	movw	r10, r24
 			wdt_reset();
     4e7a:	a8 95       	wdr
+			// receive subs
 			MQTTYield(&mqtt_client, 100);
     4e7c:	44 e6       	ldi	r20, 0x64	; 100
     4e7e:	50 e0       	ldi	r21, 0x00	; 0

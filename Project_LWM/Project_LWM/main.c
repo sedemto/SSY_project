@@ -39,8 +39,9 @@
 
 // NET INFO
 uint8_t mqtt_target[4] = {34, 249, 184, 60}; //mqtt IP address
-uint8_t ping_ip[4] = { 192, 168, 53, 109 };
+//uint8_t ping_ip[4] = { 192, 168, 53, 109 };	
 //NIC metrics for another PC (second IP configuration)
+
 wiz_NetInfo netInfo = { .mac  = {0x00, 0x08, 0xdc, 0xab, 0xcd, 0xef}, // Mac address
 .ip   = {192, 168, 53, 199},         // IP address
 .sn   = {255, 255, 255, 0},         // Subnet mask
@@ -157,7 +158,8 @@ static void avr_init(void);
 void timer0_init(void);
 unsigned long millis(void);
 void executeCommand(char *command);
-
+static void create_json();
+int index_mask(int mask);
 //Wiznet FUNC headers
 void print_network_information(void);
 
@@ -207,6 +209,7 @@ char active[8][50] = {"Napatie", "Proud", "Freq", "Vykon", "Strida", "Ucinnik", 
 char analog3[8][50] = {"Vzdialenost", "Mag pole", "Ionizacni zareni", "Koncetrace CO %", "Barva R", "Barva G", "Barva B", "Rezerva"};
 char digital1[8][50] = {"Pritomnost osob", "Detekcia pohybu", "Mag kontakt", "Pritomnost alko", "Detekcia ohna", "Detekcia koure", "Priblizenie", "Zaplaveni"};
 
+// set index based on mask
 int index_mask(int mask){
 	int index = 0;
 	switch(mask){
@@ -244,7 +247,6 @@ void executeCommand(char *command)
 	jsonNode_t *root = 0;
 	jsonDecoderStatus_t ret;
 
-	char state[5];
 	int cislo_timer;
 	int cislo_vypis;
 
@@ -255,7 +257,7 @@ void executeCommand(char *command)
 	}
 
 	JSON_DECODER_getRoot(&root);
-
+	// setting variables based on configuration info
 	ret = JSON_DECODER_getNumber(root, "mqtt_timer", &cislo_timer);
 	if(JSON_DECODER_OK == ret)
 	{
@@ -267,13 +269,13 @@ void executeCommand(char *command)
 	{
 		vypis_cau = cislo_vypis;
 	}
-}static void create_json(){	wdt_reset();	info.final_json[100] = "\0";	char* json_string = "\0";	switch(clusterID){		case 1:			json_string = meteorologicke[index_mask(buffer_mask)];			break;		case 2:			json_string = analog2[index_mask(buffer_mask)];			break;		case 3:			json_string = zdravotni[index_mask(buffer_mask)];			break;		case 4:			json_string = analog_2[index_mask(buffer_mask)];			break;		case 5:			json_string = analog3[index_mask(buffer_mask)];			break;		case 6:			json_string = active[index_mask(buffer_mask)];			break;		case 7:			json_string = pasive[index_mask(buffer_mask)];			break;		case 129:			json_string = digital1[index_mask(buffer_mask)];			break;// 		case 130:
+}static void create_json(){	wdt_reset();	info.final_json[100] = "\0";	char* json_string = "\0";	// set sensor based on clusterID and sent data received	switch(clusterID){		case 1:			json_string = meteorologicke[index_mask(buffer_mask)];			break;		case 2:			json_string = analog2[index_mask(buffer_mask)];			break;		case 3:			json_string = zdravotni[index_mask(buffer_mask)];			break;		case 4:			json_string = analog_2[index_mask(buffer_mask)];			break;		case 5:			json_string = analog3[index_mask(buffer_mask)];			break;		case 6:			json_string = active[index_mask(buffer_mask)];			break;		case 7:			json_string = pasive[index_mask(buffer_mask)];			break;		case 129:			json_string = digital1[index_mask(buffer_mask)];			break;// 		case 130:
 // 			json_string = meteorologicke[index_mask(buffer_mask)];
 // 			break;
 // 		case 131:
 // 			json_string = meteorologicke[index_mask(buffer_mask)];
 // 			break;
-		case 0:			json_string = meteorologicke[index_mask(buffer_mask)];			break;	}	sprintf(info.topic,"/ssy/test/%s",json_string);	info.len_json = sprintf(info.final_json, "{\"%s\":%d}",json_string,buffer_data);		}//***************** JSON: END
+		case 0:			json_string = meteorologicke[index_mask(buffer_mask)];			break;	}	// setting topic based on received data	sprintf(info.topic,"/ssy/test/%s",json_string);	// setting info abount json file -- data (final_json) and length (len_json)	info.len_json = sprintf(info.final_json, "{\"%s\":%d}",json_string,buffer_data);		}//***************** JSON: END
 
 	
 
@@ -390,7 +392,7 @@ int main()
 	}
 	
 	// Subscribe to all topics
-	char SubString[] = "/ssy/test/#";// Subscribe for all that begin from "/"
+	char SubString[] = "/ssy/test/#";// Subscribe for all that begin from "/ssy/test/"
 	mqtt_rc = MQTTSubscribe(&mqtt_client, SubString, QOS0, messageArrived);
 	PRINTF("Subscribed (%s) %d\r\n", SubString, mqtt_rc);
 	// timers defined
@@ -402,6 +404,7 @@ int main()
 		SYS_TaskHandler();
 		HAL_UartTaskHandler();
 		APP_TaskHandler();
+		// reset watchdog at every cycle
 		wdt_reset();
 		// json config
 		if(json_config_ready){
@@ -409,13 +412,12 @@ int main()
 			json_config_ready = 0;
 		}
 		// mqtt publish when LWM msg sent
-		//static char _msg[100] = "\0";
-		//static int _len;
   		if(data_ready){
-  			//_len = sprintf(_msg, "%d",clusterID);
 			create_json();
+			// publish data received
   			mqtt_pub(&mqtt_client, info.topic,info.final_json,info.len_json );
   			data_ready = 0;
+			// print message when "vypis_cau" is 1
 			if(vypis_cau){
 				PRINTF("CAAAAU\n\r");
 			}
@@ -425,6 +427,7 @@ int main()
  		{
 			timer_mqtt_pub_1sec = millis();
 			wdt_reset();
+			// receive subs
 			MQTTYield(&mqtt_client, 100);
 			
  		}
