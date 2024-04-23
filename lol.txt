@@ -1,0 +1,4 @@
+char pasive[8][50] = {"Odpor", "Indukcnost", "Kapacita", "PN", "Impedancia", "Rez freq", "Tau", "Faktor kvality"};
+char active[8][50] = {"Napatie", "Proud", "Freq", "Vykon", "Strida", "Ucinnik", "Fazovy posun", "Rezerva"};
+char analog3[8][50] = {"Vzdialenost", "Mag pole", "Ionizacni zareni", "Koncetrace CO %", "Barva R", "Barva G", "Barva B", "Rezerva"};
+char digital1[8][50] = {"Pritomnost osob", "Detekcia pohybu", "Mag kontakt", "Pritomnost alko", "Detekcia ohna", "Detekcia koure", "Priblizenie", "Zaplaveni"};
